@@ -3170,6 +3170,39 @@ var App = function () {
 
             }, 25000);
 	}
+	
+	
+	/*-----------------------------------------------------------------------------------*/
+	/*	Handles Menu on Load
+	/*-----------------------------------------------------------------------------------*/	
+	var handleMenu = function(){
+		var menuContainer = $("#menubar");
+		$.getJSON("json/menu.json", function (data){
+			$.each(data, function() {
+				var item = $("li");
+				var itemLink = $("<a  href='javascript:;' class=''></a>");
+				var itemContent = $("<i class='" + data.icon + "'></i><span class='menu-text'>" + data.name +"</span><span class='arrow'></span>");
+				
+				itemLink.append(itemContent);
+				item.append(itemLink);
+				menuContainer.append(item);
+				
+				if (data.submenu){
+					item.attr("class", "has-sub");
+					var subcontainer = $("<ul class='has-sub'>");
+					$.each(data.submenu, function(submenu){
+						var subItem = $("<li><a class='' href='" + data.url + "'><span class='sub-menu-text'>" + data.name + "</span></a></li>");
+						subcontainer.append(subItem);
+					});
+					item.append(subcontainer);
+				}else{
+					itemLink.attr("href", data.url);
+				}
+				
+			});
+		});
+	}
+	
 	/*-----------------------------------------------------------------------------------*/
 	/*	Handles Profile Edit
 	/*-----------------------------------------------------------------------------------*/
@@ -3182,12 +3215,13 @@ var App = function () {
         init: function () {
 		
             if (App.isPage("index")) {
-				handleDateTimePickers(); //Function to display Date Timepicker
-				handleSparkline();		//Function to display Sparkline charts
-				handleDashFlotCharts(); //Function to display flot charts in dashboard
-				handleChat('chat-window'); //Function to handle chat
-				handleCalendar();	//Function to display calendar
-				handleGritter();	//Function to display Gritter notifications
+            	handleMenu();
+				//handleDateTimePickers(); //Function to display Date Timepicker
+				//handleSparkline();		//Function to display Sparkline charts
+				//handleDashFlotCharts(); //Function to display flot charts in dashboard
+				//handleChat('chat-window'); //Function to handle chat
+				//handleCalendar();	//Function to display calendar
+				//handleGritter();	//Function to display Gritter notifications
             }
 			if (App.isPage("widgets_box")) {
 				handleBoxSortable(); //Function to handle Box sortables

@@ -1,0 +1,101 @@
+[
+	{
+		"name": "单据管理", 
+	    "url": "", 
+	    "icon": "glyphicon glyphicon-th-list",
+	    "submenu":[
+	    	{
+		    	"name": "订单", 
+		        "url": "order/main.do",
+		        "submenu": null
+	        }, 
+        	{
+        		"name": "采购单", 
+                "url": "purchase/main.do",
+                "submenu": null
+            }, 
+            {
+            	"name": "发货单", 
+                "url": "deliver/main.do",
+                "submenu": null
+            },                       
+            {
+            	"name": "库存", 
+                "url": "storage/main.do",
+                "submenu": null
+            }, 
+            {
+            	"name": "开票", 
+                "url": "invoice/main.do",
+                "submenu": null
+            }]
+    },
+    {
+    	"name": "账务管理",
+        "url": "",
+        "icon": "glyphicon glyphicon-usd",
+        "submenu":[
+        	{
+        		"name": "应收", 
+            	"url": "http://localhost:8080/IMShh/jsp/finance/teller/receivable.html",
+            	"submenu": null
+            },
+            {
+            	"name": "应付", 
+                "url": "http://localhost:8080/IMShh/jsp/finance/teller/payable.html",
+                "submenu": null
+            },
+            {
+            	"name": "账户管理", 
+                "url": "http://localhost:8080/IMShh/jsp/finance/account/index.html",
+                "submenu": null
+            }]
+    },             
+    {
+    	"name": "系统管理",
+        "url": "",
+        "icon": "glyphicon glyphicon-tags",
+        "submenu":[
+        	{
+        		"name": "用户管理", 
+                "url": "user/main.do",
+                "submenu": null
+            },
+            {
+            	"name": "角色管理", 
+                "url": "role/main.do",
+                "submenu": null
+            },
+            {
+            	"name": "系统权限", 
+                "url": "user/main.do",
+                "submenu": null
+            }]
+    },
+    {
+    	"name": "基础数据",
+        "url": "",
+        "icon": "glyphicon glyphicon-tags",
+        "submenu":[
+        	{
+        		"name": "客户信息",
+                "url": "cust/main.do",
+           		"submenu": null
+           	},
+            {
+            	"name": "供应商信息",
+               	"url": "supp/main.do",
+           		"submenu": null
+           	},
+            {
+            	"name": "产品信息",
+               	"url": "pdt/main.do",
+           		"submenu": null
+           	},
+            {
+            	"name": "原材料信息",
+               	"url": "mtl/main.do",
+           		"submenu": null
+           	}]
+    }
+]
