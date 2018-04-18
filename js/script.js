@@ -3176,27 +3176,29 @@ var App = function () {
 	/*	Handles Menu on Load
 	/*-----------------------------------------------------------------------------------*/	
 	var handleMenu = function(){
+		
 		var menuContainer = $("#menubar");
 		$.getJSON("json/menu.json", function (data){
-			$.each(data, function() {
-				var item = $("li");
+			$.each(data, function(index, obj) {
+				//alert(index);
+				var item = $("<li>");
 				var itemLink = $("<a  href='javascript:;' class=''></a>");
-				var itemContent = $("<i class='" + data.icon + "'></i><span class='menu-text'>" + data.name +"</span><span class='arrow'></span>");
+				var itemContent = $("<i class='" + obj.icon + "'></i><span class='menu-text'>" + obj.name +"</span><span class='arrow'></span>");
 				
 				itemLink.append(itemContent);
 				item.append(itemLink);
 				menuContainer.append(item);
 				
-				if (data.submenu){
+				if (obj.submenu){
 					item.attr("class", "has-sub");
-					var subcontainer = $("<ul class='has-sub'>");
-					$.each(data.submenu, function(submenu){
-						var subItem = $("<li><a class='' href='" + data.url + "'><span class='sub-menu-text'>" + data.name + "</span></a></li>");
+					var subcontainer = $("<ul class='sub'>");
+					$.each(obj.submenu, function(index, submenu){
+						var subItem = $("<li><a class='' href='" + submenu.url + "'><span class='sub-menu-text'>" + submenu.name + "</span></a></li>");
 						subcontainer.append(subItem);
 					});
 					item.append(subcontainer);
 				}else{
-					itemLink.attr("href", data.url);
+					itemLink.attr("href", obj.url);
 				}
 				
 			});

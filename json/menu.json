@@ -2,7 +2,7 @@
 	{
 		"name": "单据管理", 
 	    "url": "", 
-	    "icon": "glyphicon glyphicon-th-list",
+	    "icon": "fa fa-folder-open-o",
 	    "submenu":[
 	    	{
 		    	"name": "订单", 
@@ -33,7 +33,7 @@
     {
     	"name": "账务管理",
         "url": "",
-        "icon": "glyphicon glyphicon-usd",
+        "icon": "fa fa-eur",
         "submenu":[
         	{
         		"name": "应收", 
@@ -50,32 +50,11 @@
                 "url": "http://localhost:8080/IMShh/jsp/finance/account/index.html",
                 "submenu": null
             }]
-    },             
-    {
-    	"name": "系统管理",
-        "url": "",
-        "icon": "glyphicon glyphicon-tags",
-        "submenu":[
-        	{
-        		"name": "用户管理", 
-                "url": "user/main.do",
-                "submenu": null
-            },
-            {
-            	"name": "角色管理", 
-                "url": "role/main.do",
-                "submenu": null
-            },
-            {
-            	"name": "系统权限", 
-                "url": "user/main.do",
-                "submenu": null
-            }]
     },
     {
     	"name": "基础数据",
         "url": "",
-        "icon": "glyphicon glyphicon-tags",
+        "icon": "fa fa-book",
         "submenu":[
         	{
         		"name": "客户信息",
@@ -97,5 +76,26 @@
                	"url": "mtl/main.do",
            		"submenu": null
            	}]
+    },            
+    {
+    	"name": "系统管理",
+        "url": "",
+        "icon": "fa fa-gear (alias)",
+        "submenu":[
+        	{
+        		"name": "用户管理", 
+                "url": "user/main.do",
+                "submenu": null
+            },
+            {
+            	"name": "角色管理", 
+                "url": "role/main.do",
+                "submenu": null
+            },
+            {
+            	"name": "系统权限", 
+                "url": "user/main.do",
+                "submenu": null
+            }]
     }
 ]
