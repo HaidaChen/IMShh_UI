@@ -62,7 +62,7 @@ var App = function () {
 	/*	Sidebar
 	/*-----------------------------------------------------------------------------------*/
 	var handleSidebar = function () {
-	jQuery('.sidebar-menu .has-sub > a').click(function () {
+	jQuery('.sidebar-menu').on('click', '.has-sub > a', function () {
             var last = jQuery('.has-sub.open', $('.sidebar-menu'));
             last.removeClass("open");
             jQuery('.arrow', last).removeClass("open");
@@ -3203,6 +3203,7 @@ var App = function () {
 				
 			});
 		});
+		console.log(menuContainer.html());
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
