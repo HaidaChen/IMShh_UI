@@ -1,3 +1,4 @@
+var projectName = "IMShh_UI";
 var App = function () {
 
 	var currentPage = ''; // current page
@@ -3175,10 +3176,10 @@ var App = function () {
 	/*-----------------------------------------------------------------------------------*/
 	/*	Handles Menu on Load
 	/*-----------------------------------------------------------------------------------*/	
-	var handleMenu = function(){
+	var handleMenu = function(current){
 		
 		var menuContainer = $("#menubar");
-		$.getJSON("json/menu.json", function (data){
+		$.getJSON("/IMShh_UI/json/menu.json", function (data){
 			$.each(data, function(index, obj) {
 				//alert(index);
 				var item = $("<li>");
@@ -3193,10 +3194,20 @@ var App = function () {
 					item.attr("class", "has-sub");
 					var subcontainer = $("<ul class='sub'>");
 					$.each(obj.submenu, function(index, submenu){
-						var subItem = $("<li><a class='' href='" + submenu.url + "'><span class='sub-menu-text'>" + submenu.name + "</span></a></li>");
+						var subItem = '';
+						if (submenu.url == current){
+							subItem = $("<li><a class='' href='" + submenu.url + "'><span class='sub-menu-text'>" + submenu.name + "</span></a></li>");
+							item.attr("class", "has-sub active");
+							itemLink.html("<i class='" + obj.icon + "'></i><span class='menu-text'>" + obj.name +"</span><span class='arrow open'></span><span class='selected'></span>");
+						}
+						else{
+							subItem = $("<li class='current'><a class='' href='" + submenu.url + "'><span class='sub-menu-text'>" + submenu.name + "</span></a></li>");
+						} 
 						subcontainer.append(subItem);
+					  
 					});
 					item.append(subcontainer);
+					
 				}else{
 					itemLink.attr("href", obj.url);
 				}
@@ -3204,6 +3215,41 @@ var App = function () {
 			});
 		});
 		console.log(menuContainer.html());
+	}
+	
+	/*-----------------------------------------------------------------------------------*/
+	/*	Load Order data
+	/*-----------------------------------------------------------------------------------*/	
+	var loadDataForOrder = function(){
+		var orderlist = $("#orderlist");
+		
+		$.getJSON("/IMShh_UI/json/order.json", function (data){
+			$.each(data, function(index, order) {
+				var item = $('<li class="clearfix">');
+				var itemleft = $('<div class="pull-left"><p><h5><strong>' + order.identity + '</strong> ' + order.custName + '</h5></p><p><i class="fa fa-clock-o"></i> <abbr class="timeago" title="' + order.orderDate + '" >' + order.orderDate + '</abbr></p>');
+				var itemright = $('<div class="text-right pull-right"></div>');
+				var itemcost = $('<h4 class="cost">' + order.amount + '</h4>');
+				var itemstate = '';
+				if (order.state == 1){
+					itemstate = $('<span class="label label-danger arrow-in-right"><i class="fa fa-star"></i> 新订单</span>');
+				}
+				if (order.state == 2){
+					itemstate = $('<span class="label label-primary arrow-in-right"><i class="fa fa-archive"></i> 生产</span>');
+				}
+				if (order.state == 3){
+					itemstate = $('<span class="label label-warning arrow-in-right"><i class="fa fa-cog"></i> 发货</span>');
+				}
+				if (order.state == 4){
+					itemstate = $('<p><span class="label label-success arrow-in-right"><i class="fa fa-check"></i> 以完成</span></p>');
+				}
+				
+				itemright.append(itemcost);
+				itemright.append(itemstate);
+				item.append(itemleft);
+				item.append(itemright);
+				orderlist.append(item);
+			});
+		});
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -3219,12 +3265,10 @@ var App = function () {
 		
             if (App.isPage("index")) {
             	handleMenu();
-				//handleDateTimePickers(); //Function to display Date Timepicker
-				//handleSparkline();		//Function to display Sparkline charts
-				//handleDashFlotCharts(); //Function to display flot charts in dashboard
-				//handleChat('chat-window'); //Function to handle chat
-				//handleCalendar();	//Function to display calendar
-				//handleGritter();	//Function to display Gritter notifications
+            }
+            if (App.isPage("order")){
+            	handleMenu("/IMShh_UI/page/order.html");
+            	loadDataForOrder();
             }
 			if (App.isPage("widgets_box")) {
 				handleBoxSortable(); //Function to handle Box sortables
