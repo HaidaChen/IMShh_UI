@@ -3210,11 +3210,9 @@ var App = function () {
 					
 				}else{
 					itemLink.attr("href", obj.url);
-				}
-				
+				}				
 			});
 		});
-		console.log(menuContainer.html());
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
@@ -3222,22 +3220,26 @@ var App = function () {
 	/*-----------------------------------------------------------------------------------*/	
 	var loadDataForOrder = function(){
 		var orderlist = $("#orderlist");
+		var orderdetail = $("#tbl_odrdetail");
+		var orderidenfity = $("#odridentify");
+		var ordertotlment = $("#odrtotlment");
+		
 		
 		$.getJSON("/IMShh_UI/json/order.json", function (data){
-			$.each(data, function(index, order) {
+			$.each(data.rows, function(index, order) {
 				var item = $('<li class="clearfix">');
-				var itemleft = $('<div class="pull-left"><p><h5><strong>' + order.identity + '</strong> ' + order.custName + '</h5></p><p><i class="fa fa-clock-o"></i> <abbr class="timeago" title="' + order.orderDate + '" >' + order.orderDate + '</abbr></p>');
+				var itemleft = $('<div class="pull-left"><p><h5><strong>' + order.identify + '</strong> ' + order.custName + '</h5></p><p><i class="fa fa-clock-o"></i> <abbr class="timeago" title="' + order.orderDate + '" >' + order.orderDate + '</abbr></p>');
 				var itemright = $('<div class="text-right pull-right"></div>');
-				var itemcost = $('<h4 class="cost">' + order.amount + '</h4>');
+				var itemcost = $('<h4 class="cost">$' + order.amount + '</h4>');
 				var itemstate = '';
 				if (order.state == 1){
 					itemstate = $('<span class="label label-danger arrow-in-right"><i class="fa fa-star"></i> 新订单</span>');
 				}
 				if (order.state == 2){
-					itemstate = $('<span class="label label-primary arrow-in-right"><i class="fa fa-archive"></i> 生产</span>');
+					itemstate = $('<span class="label label-primary arrow-in-right"><i class="fa fa-cogs"></i> 生产中</span>');
 				}
 				if (order.state == 3){
-					itemstate = $('<span class="label label-warning arrow-in-right"><i class="fa fa-cog"></i> 发货</span>');
+					itemstate = $('<span class="label label-warning arrow-in-right"><i class="fa fa-rocket"></i> 已发货</span>');
 				}
 				if (order.state == 4){
 					itemstate = $('<p><span class="label label-success arrow-in-right"><i class="fa fa-check"></i> 以完成</span></p>');
@@ -3248,6 +3250,22 @@ var App = function () {
 				item.append(itemleft);
 				item.append(itemright);
 				orderlist.append(item);
+				if (index == 0){
+					orderidenfity.text(order.identify);
+					orderdetail.bootstrapTable({
+						data: order.details,
+						cache: false
+					});
+					ordertotlment.text("$" + order.amount);
+				}
+				item.click(function(){
+					orderidenfity.text(order.identify);
+					orderdetail.bootstrapTable('refresh', {
+						data: order.details,
+						cache: false
+					});
+					ordertotlment.text("$" + order.amount);
+				});
 			});
 		});
 	}

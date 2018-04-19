@@ -8,7 +8,59 @@
 			"orderDate":"2018-02-25",
 			"amount":110.0,
 			"state":1,
-			"remark":"111"
+			"remark":"111",
+			"details": [
+				{
+					"id":"001",
+					"pdtNo": "pdt001",
+					"pdtName": "盆花",
+					"content": "200发",
+					"priceRMB": 100.00,
+					"priceDollar": 15.00,
+					"quantity": 50,
+					"totlemnt": 750.00
+				},
+				{
+					"id":"002",
+					"pdtNo": "pdt002",
+					"pdtName": "礼花",
+					"content": "30寸",
+					"priceRMB": 240.00,
+					"priceDollar": 83.00,
+					"quantity": 100,
+					"totlemnt": 8300.00
+				},
+				{
+					"id":"003",
+					"pdtNo": "pdt003",
+					"pdtName": "彩星花束",
+					"content": "64发",
+					"priceRMB": 90.00,
+					"priceDollar": 13.00,
+					"quantity": 80,
+					"totlemnt": 1040.00
+				},
+				{
+					"id":"004",
+					"pdtNo": "pdt004",
+					"pdtName": "银星瀑布",
+					"content": "108发",
+					"priceRMB": 190.00,
+					"priceDollar": 27.00,
+					"quantity": 50,
+					"totlemnt": 1350.00
+				},
+				{
+					"id":"005",
+					"pdtNo": "pdt005",
+					"pdtName": "天天旺",
+					"content": "68发*98发*168发",
+					"priceRMB": 680.00,
+					"priceDollar": 100.00,
+					"quantity": 50,
+					"totlemnt": 5000.00
+				}
+			]
 		},
 		{
 			"id":"1520522508091",
@@ -17,7 +69,49 @@
 			"orderDate":"2018-02-25",
 			"amount":120.0,
 			"state":2,
-			"remark":"111"
+			"remark":"111",
+			"details": [
+				{
+					"id":"001",
+					"pdtNo": "pdt001",
+					"pdtName": "盆花",
+					"content": "200发",
+					"priceRMB": 100.00,
+					"priceDollar": 15.00,
+					"quantity": 50,
+					"totlemnt": 750.00
+				},
+				{
+					"id":"002",
+					"pdtNo": "pdt002",
+					"pdtName": "礼花",
+					"content": "30寸",
+					"priceRMB": 240.00,
+					"priceDollar": 83.00,
+					"quantity": 100,
+					"totlemnt": 8300.00
+				},
+				{
+					"id":"003",
+					"pdtNo": "pdt003",
+					"pdtName": "彩星花束",
+					"content": "64发",
+					"priceRMB": 90.00,
+					"priceDollar": 13.00,
+					"quantity": 80,
+					"totlemnt": 1040.00
+				},
+				{
+					"id":"005",
+					"pdtNo": "pdt005",
+					"pdtName": "天天旺",
+					"content": "68发*98发*168发",
+					"priceRMB": 680.00,
+					"priceDollar": 100.00,
+					"quantity": 50,
+					"totlemnt": 5000.00
+				}
+			]
 		},
 		{
 			"id":"1520522508091",
@@ -26,7 +120,49 @@
 			"orderDate":"2018-02-25",
 			"amount":130.0,
 			"state":3,
-			"remark":"111"
+			"remark":"111",
+			"details": [
+				{
+					"id":"001",
+					"pdtNo": "pdt001",
+					"pdtName": "盆花",
+					"content": "200发",
+					"priceRMB": 100.00,
+					"priceDollar": 15.00,
+					"quantity": 50,
+					"totlemnt": 750.00
+				},
+				{
+					"id":"002",
+					"pdtNo": "pdt002",
+					"pdtName": "礼花",
+					"content": "30寸",
+					"priceRMB": 240.00,
+					"priceDollar": 83.00,
+					"quantity": 100,
+					"totlemnt": 8300.00
+				},
+				{
+					"id":"004",
+					"pdtNo": "pdt004",
+					"pdtName": "银星瀑布",
+					"content": "108发",
+					"priceRMB": 190.00,
+					"priceDollar": 27.00,
+					"quantity": 50,
+					"totlemnt": 1350.00
+				},
+				{
+					"id":"005",
+					"pdtNo": "pdt005",
+					"pdtName": "天天旺",
+					"content": "68发*98发*168发",
+					"priceRMB": 680.00,
+					"priceDollar": 100.00,
+					"quantity": 50,
+					"totlemnt": 5000.00
+				}
+			]
 		},
 		{
 			"id":"1520522508091",
@@ -35,7 +171,39 @@
 			"orderDate":"2018-02-25",
 			"amount":140.0,
 			"state":4,
-			"remark":"111"
+			"remark":"111",
+			"details": [
+				{
+					"id":"001",
+					"pdtNo": "pdt001",
+					"pdtName": "盆花",
+					"content": "200发",
+					"priceRMB": 100.00,
+					"priceDollar": 15.00,
+					"quantity": 50,
+					"totlemnt": 750.00
+				},
+				{
+					"id":"002",
+					"pdtNo": "pdt002",
+					"pdtName": "礼花",
+					"content": "30寸",
+					"priceRMB": 240.00,
+					"priceDollar": 83.00,
+					"quantity": 100,
+					"totlemnt": 8300.00
+				},				
+				{
+					"id":"005",
+					"pdtNo": "pdt005",
+					"pdtName": "天天旺",
+					"content": "68发*98发*168发",
+					"priceRMB": 680.00,
+					"priceDollar": 100.00,
+					"quantity": 50,
+					"totlemnt": 5000.00
+				}
+			]
 		},
 		{
 			"id":"1520522508091",
@@ -44,7 +212,49 @@
 			"orderDate":"2018-02-25",
 			"amount":150.0,
 			"state":4,
-			"remark":"111"
+			"remark":"111",
+			"details": [
+				{
+					"id":"001",
+					"pdtNo": "pdt001",
+					"pdtName": "盆花",
+					"content": "200发",
+					"priceRMB": 100.00,
+					"priceDollar": 15.00,
+					"quantity": 50,
+					"totlemnt": 750.00
+				},				
+				{
+					"id":"003",
+					"pdtNo": "pdt003",
+					"pdtName": "彩星花束",
+					"content": "64发",
+					"priceRMB": 90.00,
+					"priceDollar": 13.00,
+					"quantity": 80,
+					"totlemnt": 1040.00
+				},
+				{
+					"id":"004",
+					"pdtNo": "pdt004",
+					"pdtName": "银星瀑布",
+					"content": "108发",
+					"priceRMB": 190.00,
+					"priceDollar": 27.00,
+					"quantity": 50,
+					"totlemnt": 1350.00
+				},
+				{
+					"id":"005",
+					"pdtNo": "pdt005",
+					"pdtName": "天天旺",
+					"content": "68发*98发*168发",
+					"priceRMB": 680.00,
+					"priceDollar": 100.00,
+					"quantity": 50,
+					"totlemnt": 5000.00
+				}
+			]
 		}
 	]
 }

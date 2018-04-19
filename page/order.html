@@ -7,9 +7,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<link rel="stylesheet" type="text/css" href="../css/cloud-admin.css" >
-	<link rel="stylesheet" type="text/css"  href="../css/themes/default.css" id="skin-switcher" >
-	<link rel="stylesheet" type="text/css"  href="../css/responsive.css" >
+	<link rel="stylesheet" href="../bootstrap-dist/css/bootstrap-min.css">
+	<link rel="stylesheet" href="../bootstrap-table/bootstrap-table.css">
+	<link rel="stylesheet" href="../css/cloud-admin.css" >
+	<link rel="stylesheet" href="../css/themes/default.css">
+	<link rel="stylesheet" href="../css/responsive.css" >
 	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
 	<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
@@ -94,7 +96,7 @@
 														<div class="col-md-4">
 															<div class="panel panel-default">
 															  <div class="panel-body orders">
-																<div class="scroller" data-height="650px" data-always-visible="1" data-rail-visible="1">
+																<div class="scroller" max-height="650px" data-always-visible="1" data-rail-visible="1">
 																<ul id="orderlist" class="list-unstyled">
 																	
 																</ul>
@@ -133,132 +135,41 @@
 															  </div>
 															</div>
 														</div>
-														<!-- /ORDER SCROLL -->
-														<!-- ORDER DETAILS -->
+														
 														<div class="col-md-8">
 															<div class="panel panel-default">
 															  <div class="panel-body">
 																<div class="pull-left">
-																	<button class="btn btn-default">Cancel</button>
+																	<h4><span id="odridentify"></span>订单项</h4>
 																</div>
 																<div class="pull-right hidden-xs">
 																	<div class="btn-group">
-																		<button class="btn btn-default"><i class="fa fa-bars"></i> Fullfill order</button>
-																		<button class="btn btn-success"><i class="fa fa-check"></i> Mark as complete</button>
+																		<button class="btn btn-success"><i class="fa fa-check"></i>标记完成</button>
 																	</div>
 																</div>
-																<div class="pull-left visible-xs">
-																	<div class="btn-group">
-																		<button class="btn btn-sm btn-default"><i class="fa fa-bars"></i> Fullfill selected</button>
-																		<button class="btn btn-sm btn-success"><i class="fa fa-check"></i> Mark complete</button>
-																	</div>
-																</div>
+																
 																<div class="clearfix"></div>
 																<hr>
-																<!-- TABLE -->
-																<table class='table table-hover'>
+																
+																<table id="tbl_odrdetail" class='table table-hover'>
 																  <thead>
-																	<tr>
-																	  <th class='only-checkbox'>
-																		#
-																	  </th>
-																	  <th>Item</th>
-																	  <th>
-																		<div class='text-center'>Quantity</div>
-																	  </th>
-																	  <th>
-																		<div class='text-right'>Total Price</div>
-																	  </th>
+																	<tr>																	  
+																	  <th data-field="pdtNo">货号</th>
+																	  <th data-field="pdtName">品名</th>
+																	  <th data-field="content">含量</th>
+																	  <th data-field="quantity">数量</th>
+																	  <th data-field="priceRMB">人民币单价</th>
+																	  <th data-field="priceDollar">美元单价</th>
+																	  <th data-field="totlemnt">合计</th>
 																	</tr>
-																  </thead>
-																  <tbody>
-																	<tr>
-																	  <td class='only-checkbox'>
-																		<input type='checkbox'>
-																	  </td>
-																	  <td>Apple Macbook Pro</td>
-																	  <td>
-																		<div class='text-center'>1</div>
-																	  </td>
-																	  <td>
-																		<div class='text-right'>$999.00</div>
-																	  </td>
-																	</tr>
-																	<tr>
-																	  <td class='only-checkbox'>
-																		<input type='checkbox'>
-																	  </td>
-																	  <td>Samsung Galaxy Note 3</td>
-																	  <td>
-																		<div class='text-center'>4</div>
-																	  </td>
-																	  <td>
-																		<div class='text-right'>$299.00</div>
-																	  </td>
-																	</tr>
-																	<tr>
-																	  <td class='only-checkbox'>
-																		<input type='checkbox'>
-																	  </td>
-																	  <td>Ray Ban</td>
-																	  <td>
-																		<div class='text-center'>3</div>
-																	  </td>
-																	  <td>
-																		<div class='text-right'>$224.00</div>
-																	  </td>
-																	</tr>
-																  </tbody>
+																  </thead>																  
 																</table>
-																<!-- /TABLE -->
+																
 																<div class="text-right">
-																	<h3>$1467.00</h3>
+																	<h3><span id="odrtotlment"></span></h3>
 																</div>
-																<hr>
-																<!-- CUSTOMER DETAILS -->
-																<div class="row">
-																	<div class="col-sm-4">
-																		<h4>
-																			<i class="fa fa-dollar"></i>
-																			Payment Status
-																		</h4>
-																		<h5><strong><span class="label label-success"><i class="fa fa-check"></i> PAID</span></strong></h5><br>
-																		<h4>
-																			<i class="fa fa-dollar"></i>
-																			Payment Method
-																		</h4>
-																		<h5><strong><span class="label label-primary"><i class="fa fa-check"></i> CREDIT CARD</span></strong></h5><br>
-																	</div>
-																	<div class="col-sm-7 col-sm-offset-1">
-																		<h4>
-																			<i class="fa fa-envelope"></i>
-																			Shipping address
-																		</h4>
-																		<div class="well">	
-																			<h5><strong>Joyce R. Duke</strong></h5><br>
-																			2849 Harry Place<br>
-																			Lincolnton, NC 28092<br>
-																		</div>
-																	</div>
-																</div>
-																<!-- PAYMENT STATUS -->
-																<hr>
-																<div class="form-actions form-actions-padding">
-																	<ul class="pager">
-																		<li class="previous">
-																			<a href="#" class="btn btn-default"><i class="fa fa-chevron-left fa-2x"></i></a>
-																		</li>
-																		<li class="next">
-																			<a href="#" class="btn btn-default"><i class="fa fa-chevron-right fa-2x"></i></a>														
-																		</li>
-																	</ul>
-																</div>
-															  </div>
-															  <!-- /PANEL BODY --> 
-															  
 															</div>
 														</div>
-														<!-- /ORDER DETAILS -->
 													</div>
 												</div>
 											
@@ -359,6 +270,7 @@
 	<script src="../js/jquery/jquery-2.0.3.min.js"></script>
 	<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+	<script src="../bootstrap-table/bootstrap-table.js"></script>
 	<script src="../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
 	<script src="../js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
 	<script src="../js/jQuery-Cookie/jquery.cookie.min.js"></script>
