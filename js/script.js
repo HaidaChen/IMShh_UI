@@ -3268,6 +3268,39 @@ var App = function () {
 				});
 			});
 		});
+		
+		$('#modalorderitem').on("hide.bs.modal", function(){
+			removeFormData($("#orderitemform"));
+		});
+		$("#tbl_orderitem").bootstrapTable();
+		$("#btn_save_orderitem").click(function(){
+			var orderitem = getJSONObjByForm($("#orderitemform"));
+			var orderitems = $("#tbl_orderitem").attr("data-data");
+			var oorderitems = JSON.parse(orderitems);
+			oorderitems[oorderitems.length] = orderitem;
+			$("#tbl_orderitem").attr("data-data", JSON.stringify(oorderitems));
+			$("#tbl_orderitem").bootstrapTable("refreshOptions", {data: oorderitems});
+			
+			$('#modalorderitem').modal('hide');
+		});
+		
+	}
+	
+	var getJSONObjByForm = function(form){
+		var formitems = form.find("input");
+		var oform = {};
+		$.each(formitems, function(index, item){
+			var field = $(item).attr("name");
+			oform[field] = $(item).val();
+		});
+		return oform;
+	}
+	
+	var removeFormData = function(form){
+		var formitems = form.find("input");
+		$.each(formitems, function(index, item){
+			$(item).val("");
+		});
 	}
 	
 	/*-----------------------------------------------------------------------------------*/
