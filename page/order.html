@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="../css/themes/default.css">
 	<link rel="stylesheet" href="../css/responsive.css" >
 	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+	<link rel="stylesheet" href="../js/datepicker/bootstrap-datepicker.css" />
 	<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
@@ -64,6 +65,31 @@
 		
 		<div id="main-content">			
 			<div class="container">
+				<div class="modal fade" id="modaldatepicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					    <div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							    <h4 class="modal-title">请选择日期</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<div class="col-md-3">
+										<input type="text" id="startDate" class="form-control selectData" placeholder="开始日期"/>
+									</div>
+									
+									<div class="col-md-3">
+										<input type="text" id="endDate" class="form-control selectData" placeholder="结束日期"/>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+							    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							    <button id="btn_chosedate" type="button" class="btn btn-primary">确定</button>
+							</div>
+					    </div>
+					</div>
+				</div>
 				<div class="modal fade" id="modalorderitem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 					    <div class="modal-content">
@@ -73,50 +99,48 @@
 							</div>
 							<div class="modal-body">
 								<form id="orderitemform" class="form-horizontal" action="#">
-									
-										<div class="form-group">
-										    <label class="col-md-3 control-label">货号</label> 
-										    <div class="col-md-7">
-										    	<input type="text" name="pdtNo" class="form-control" value="">
-										    </div>
-										</div>
-										<div class="form-group">
-										    <label class="col-md-3 control-label">品名</label> 
-										    <div class="col-md-7">
-										    	<input type="text" name="pdtName" class="form-control" value="">
-										    </div>
-										</div>
-										<div class="form-group">
-										    <label class="col-md-3 control-label">含量</label> 
-										    <div class="col-md-7">
-										    	<input type="text" name="content" class="form-control" value="">
-										    </div>
-										</div>
-										<div class="form-group">
-										    <label class="col-md-3 control-label">￥单价</label> 
-										    <div class="col-md-7">
-										    	<input type="text" name="priceRMB" class="form-control" value="">
-										    </div>
-										</div>
-										<div class="form-group">
-										    <label class="col-md-3 control-label">$ 单价</label> 
-										    <div class="col-md-7">
-										    	<input type="text" name="priceDollar" class="form-control" value="">
-										    </div>
-										</div>
-										<div class="form-group">
-										    <label class="col-md-3 control-label">数量</label> 
-										    <div class="col-md-7">
-										    	<input type="text" name="quantity" class="form-control" value="">
-										    </div>
-										</div>
-										<div class="form-group">
-										    <label class="col-md-3 control-label">合计</label> 
-										    <div class="col-md-7">
-										    	<input type="text" name="totlemnt" class="form-control" value="" readonly>
-										    </div>
-										</div>
-										
+									<div class="form-group">
+									    <label class="col-md-3 control-label">货号</label> 
+									    <div class="col-md-7">
+									    	<input type="text" name="pdtNo" class="form-control" value="">
+									    </div>
+									</div>
+									<div class="form-group">
+									    <label class="col-md-3 control-label">品名</label> 
+									    <div class="col-md-7">
+									    	<input type="text" name="pdtName" class="form-control" value="">
+									    </div>
+									</div>
+									<div class="form-group">
+									    <label class="col-md-3 control-label">含量</label> 
+									    <div class="col-md-7">
+									    	<input type="text" name="content" class="form-control" value="">
+									    </div>
+									</div>
+									<div class="form-group">
+									    <label class="col-md-3 control-label">￥单价</label> 
+									    <div class="col-md-7">
+									    	<input type="text" name="priceRMB" class="form-control" value="">
+									    </div>
+									</div>
+									<div class="form-group">
+									    <label class="col-md-3 control-label">$ 单价</label> 
+									    <div class="col-md-7">
+									    	<input type="text" name="priceDollar" class="form-control" value="">
+									    </div>
+									</div>
+									<div class="form-group">
+									    <label class="col-md-3 control-label">数量</label> 
+									    <div class="col-md-7">
+									    	<input type="text" name="quantity" class="form-control" value="">
+									    </div>
+									</div>
+									<div class="form-group">
+									    <label class="col-md-3 control-label">合计</label> 
+									    <div class="col-md-7">
+									    	<input type="text" name="totlemnt" class="form-control" value="" readonly>
+									    </div>
+									</div>										
 								</form>
 							</div>
 							<div class="modal-footer">
@@ -126,14 +150,28 @@
 					    </div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row">					
 					<div id="content" class="col-lg-12">
 						<div class="row">
 							<div class="col-sm-12">
-								<div class="page-header">
+								
+								<div class="page-header">									
 									<div class="clearfix">
 										<h3 class="content-title pull-left">订单</h3>
-										
+										<span class="date-range pull-right col-md-4" >
+											<div class="input-group" >
+												<input type="text" class="form-control" placeholder="查询条件"/>
+												<div class="input-group-btn">
+													<button type="button" id="btn_datapriod" class="btn btn-default dropdown-toggle" data-toggle="dropdown">所有数据<span class="caret"></span></button>
+													<ul id="dataperiod" class="dropdown-menu" >
+													  <li><a href="javascript:;">所有数据</a></li>
+													  <li><a href="javascript:;">本月</a></li>
+													  <li><a href="javascript:;">今年</a></li>																  
+													  <li><a data-toggle="modal" data-target="#modaldatepicker"><i class="fa fa-calendar"></i>&nbsp指定日期</a></li>
+													</ul>
+												  </div>
+											</div>
+										</span>
 									</div>
 									<div class="description">订单明细，订单的状态</div>
 								</div>
@@ -142,9 +180,20 @@
 						
 						<div class="row">
 							<div class="col-md-12">
-								<div class="box border purple">
-									<div class="box-title">
-										<h4><i class="fa fa-list-ul"></i><span class="hidden-inline-mobile">订单明细</span></h4>
+		 						<div class="box border purple">
+									<div class="box-title" >
+										<div class="dropdown" style="display: inline-block; z-index: 99;">
+											<a href="javascript:;" data-toggle="dropdown" ><h4><i class="fa fa-cogs"></i></h4></a>
+										    <ul class="dropdown-menu context"  style="text-align: left; ">
+										    	<li>
+										            <a href="#"><i class="fa fa-chain (alias)"></i>&nbsp导入</a>
+										        </li>
+										        <li>
+										            <a href="#"><i class="fa fa-external-link"></i>&nbsp导出</a>
+										        </li>
+										    </ul>
+										</div>										
+										<h4><span >订单明细</span></h4>
 									</div>
 									<div class="box-body">
 										<div class="tabbable header-tabs user-profile">
@@ -328,8 +377,8 @@
 	<script src="../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
 	<script src="../js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
 	<script src="../js/jQuery-Cookie/jquery.cookie.min.js"></script>
-	
-	
+	<script src="../js/datepicker/bootstrap-datepicker.js"></script>
+
 	
 	<script src="../js/script.js"></script>
 	<script>

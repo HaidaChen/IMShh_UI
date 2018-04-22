@@ -11,22 +11,22 @@
 	        }, 
         	{
         		"name": "采购单", 
-                "url": "purchase/main.do",
+                "url": "/IMShh_UI/purchase/main.do",
                 "submenu": null
             }, 
             {
             	"name": "发货单", 
-                "url": "deliver/main.do",
+                "url": "/IMShh_UI/page/deliver.html",
                 "submenu": null
             },                       
             {
             	"name": "库存", 
-                "url": "storage/main.do",
+                "url": "/IMShh_UI/storage/main.do",
                 "submenu": null
             }, 
             {
             	"name": "开票", 
-                "url": "invoice/main.do",
+                "url": "/IMShh_UI/invoice/main.do",
                 "submenu": null
             }]
     },

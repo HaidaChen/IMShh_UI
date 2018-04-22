@@ -3171,7 +3171,32 @@ var App = function () {
 
             }, 25000);
 	}
-	
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	Handles datepiker
+	/*-----------------------------------------------------------------------------------*/
+	var handleDatePicker = function(){
+		$('.selectData').datepicker({  
+		    autoclose: true, //自动关闭  
+		    beforeShowDay: $.noop,    //在显示日期之前调用的函数  
+		    calendarWeeks: false,     //是否显示今年是第几周  
+		    clearBtn: false,          //显示清除按钮  
+		    daysOfWeekDisabled: [],   //星期几不可选  
+		    endDate: Infinity,        //日历结束日期  
+		    forceParse: true,         //是否强制转换不符合格式的字符串  
+		    format: 'yyyy-mm-dd',     //日期格式  
+		    keyboardNavigation: true, //是否显示箭头导航  
+		    language: 'cn',           //语言  
+		    minViewMode: 0,  
+		    orientation: "auto",      //方向  
+		    rtl: false,  
+		    startDate: -Infinity,     //日历开始日期  
+		    startView: 0,             //开始显示  
+		    todayBtn: true,          //今天按钮  
+		    todayHighlight: true,    //今天高亮  
+		    weekStart: 0              //星期几是开始  
+		}); 
+	}
 	
 	/*-----------------------------------------------------------------------------------*/
 	/*	Handles Menu on Load
@@ -3218,7 +3243,7 @@ var App = function () {
 	/*-----------------------------------------------------------------------------------*/
 	/*	Load Order data
 	/*-----------------------------------------------------------------------------------*/	
-	var loadDataForOrder = function(){
+	var initOrderModule = function(){
 		var orderlist = $("#orderlist");
 		var orderdetail = $("#tbl_odrdetail");
 		var orderidenfity = $("#odridentify");
@@ -3272,7 +3297,17 @@ var App = function () {
 		$('#modalorderitem').on("hide.bs.modal", function(){
 			removeFormData($("#orderitemform"));
 		});
-		$("#tbl_orderitem").bootstrapTable();
+		$("#tbl_orderitem").bootstrapTable({columns: [
+			{field: 'pdtNo',title: '货号'}, 
+			{field: 'pdtName',title: '品名'}, 
+			{field: 'content',title: '含量'}, 
+			{field: 'priceRMB',title: '人民币单价'}, 
+			{field: 'priceDollar',title: '美元单价'}, 
+			{field: 'quantity',title: '数量'}, 
+			{field: 'totlemnt',title: '合计'}, 
+			{field: '', title: '操作', formatter: function(value,row,index){
+				return '<a href="javascript:;" onclick="deleteOrderItem(' + index + ')"><i class="fa fa-cut (alias)"></a>';
+			}}]});
 		$("#btn_save_orderitem").click(function(){
 			var orderitem = getJSONObjByForm($("#orderitemform"));
 			var orderitems = $("#tbl_orderitem").attr("data-data");
@@ -3284,8 +3319,31 @@ var App = function () {
 			$('#modalorderitem').modal('hide');
 		});
 		
+		
+		$("#dataperiod li").click(function(){
+			var index = $(this).index();
+			if (index == 3) return;
+			var period = '';
+			if (index == 0){
+				period = '所有数据';
+			}
+			if (index == 1){
+				period = '本月';
+			}
+			if (index == 2){
+				period = '今年';
+			}
+			$("#btn_datapriod").html(period);
+		});
+		
+		$("#btn_chosedate").click(function(){
+			$("#btn_datapriod").html($("#startDate").val() + " 至 " + $("#endDate").val());
+			$('#modaldatepicker').modal('hide');
+		});
 	}
 	
+	
+		
 	var getJSONObjByForm = function(form){
 		var formitems = form.find("input");
 		var oform = {};
@@ -3303,6 +3361,49 @@ var App = function () {
 		});
 	}
 	
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Deliver data
+	/*-----------------------------------------------------------------------------------*/	
+	var initDeliverModule = function(){
+		$("#tbl_deliver").bootstrapTable({
+			url: "../json/deliver.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'deliverDate',
+                title: '出库日期'
+            }, {
+                field: 'orderIdentify',
+                title: '关联订单号'
+            }, {
+                field: 'pdtNo',
+                title: '货号'
+            }, {
+                field: 'content',
+                title: '含量'
+            }, {
+                field: 'amount',
+                title: '发货数'
+            }, {
+                field: 'remark',
+                title: '备注'
+            }]
+		});
+		
+		$.getJSON("/IMShh_UI/json/order.json", function (data){
+			$("#relorder").append("<option></option>");
+			$.each(data.rows, function(index, obj){
+				$("#relorder").append("<option value='"+obj.id+"'>"+ obj.identify +"</option>");
+			});
+			$("#relorder").select2({
+			    placeholder: "关联订单",
+			    allowClear: true
+			});
+		});
+		
+	}
 	/*-----------------------------------------------------------------------------------*/
 	/*	Handles Profile Edit
 	/*-----------------------------------------------------------------------------------*/
@@ -3319,7 +3420,13 @@ var App = function () {
             }
             if (App.isPage("order")){
             	handleMenu("/IMShh_UI/page/order.html");
-            	loadDataForOrder();
+            	handleDatePicker();
+            	initOrderModule(); 
+            }
+            if (App.isPage("deliver")){
+            	handleMenu("/IMShh_UI/page/deliver.html");
+            	handleDatePicker();
+            	initDeliverModule();
             }
 			if (App.isPage("widgets_box")) {
 				handleBoxSortable(); //Function to handle Box sortables
@@ -3552,3 +3659,26 @@ var App = function () {
         return Theme;
     })();
 })(window.jQuery);
+
+
+/*-----------------------------------------------------------------------------------*/
+/*	Order Moduel Script
+/*-----------------------------------------------------------------------------------*/
+var deleteOrderItem = function(index){
+	var orderitems = $("#tbl_orderitem").attr("data-data");
+	var oorderitems = JSON.parse(orderitems);
+	oorderitems.splice(index, 1);
+	$("#tbl_orderitem").attr("data-data", JSON.stringify(oorderitems));
+	$("#tbl_orderitem").bootstrapTable("refreshOptions", {data: oorderitems});
+}
+
+$.fn.datepicker.dates['cn'] = {   //切换为中文显示  
+    days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],  
+            daysShort: ["日", "一", "二", "三", "四", "五", "六", "七"],  
+            daysMin: ["日", "一", "二", "三", "四", "五", "六", "七"],  
+            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],  
+            monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],  
+            today: "今天",  
+            clear: "清除"  
+    };	          
+	 
