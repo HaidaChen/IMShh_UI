@@ -58,22 +58,22 @@
         "submenu":[
         	{
         		"name": "客户信息",
-                "url": "cust/main.do",
+                "url": "/IMShh_UI/page/customer.html",
            		"submenu": null
            	},
             {
             	"name": "供应商信息",
-               	"url": "supp/main.do",
+               	"url": "/IMShh_UI/page/supplier.html",
            		"submenu": null
            	},
             {
             	"name": "产品信息",
-               	"url": "pdt/main.do",
+               	"url": "/IMShh_UI/page/product.html",
            		"submenu": null
            	},
             {
             	"name": "原材料信息",
-               	"url": "mtl/main.do",
+               	"url": "/IMShh_UI/page/material.html",
            		"submenu": null
            	}]
     },            

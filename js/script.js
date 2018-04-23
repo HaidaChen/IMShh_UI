@@ -3499,6 +3499,59 @@ var App = function () {
 		var exp = analysisExp(nexpression);		
 		return exp;
 	}
+	
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Customer data
+	/*-----------------------------------------------------------------------------------*/	
+	var initCustomerModule = function(){
+		$("#tbl_customer").bootstrapTable({
+			url: "../json/customer.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'name',
+                title: '客户名称'
+            }, {
+                field: 'address',
+                title: '联系地址'
+            }, {
+                field: 'phone',
+                title: '联系电话'
+            }, {
+                field: 'email',
+                title: '邮箱'
+            }, {
+                field: 'fax',
+                title: '传真'
+            }, {
+                field: 'contacts',
+                title: '联系人'
+            }, {
+                field: 'remark',
+                title: '备注'
+            }, {
+                field: '',
+                title: '操作',
+                formatter: function(value,row,index){
+					var strHtml = '<a href="javascript:;" onclick="editCustomer('+ row.id +')"><i class="fa fa-edit (alias)"></i></a>';
+					strHtml += '&nbsp;<a href="javascript:;" onclick="javascript:deleteCustomer(' + row.id + ')"><i class="fa fa-minus"></a>';
+					return strHtml;
+				}
+            }]
+		});
+		
+		$("#btn_save_customer").click(function(){
+			$("#modalCustEdit").modal("hide");
+		});
+		
+		$('#modalCustEdit').on("hide.bs.modal", function(){
+			removeFormData($("#customerForm"));
+		});
+		
+	}
+
+	
 	/*-----------------------------------------------------------------------------------*/
 	/*	Handles Profile Edit
 	/*-----------------------------------------------------------------------------------*/
@@ -3527,6 +3580,10 @@ var App = function () {
             	handleMenu("/IMShh_UI/page/invoice.html");
             	handleDatePicker();
             	initInvoiceModule();
+            }
+            if (App.isPage("customer")){
+            	handleMenu("/IMShh_UI/page/customer.html");
+            	initCustomerModule();
             }
 			if (App.isPage("widgets_box")) {
 				handleBoxSortable(); //Function to handle Box sortables
@@ -3772,6 +3829,16 @@ var deleteOrderItem = function(index){
 	$("#tbl_orderitem").bootstrapTable("refreshOptions", {data: oorderitems});
 }
 
+/*-----------------------------------------------------------------------------------*/
+/*	Customer Moduel Script
+/*-----------------------------------------------------------------------------------*/
+var deleteCustomer = function(custId){
+	alert(custId);
+}
+
+var editCustomer = function(custId){
+	alert(custId);
+}
 /*-----------------------------------------------------------------------------------*/
 /*	公共函数
 /*-----------------------------------------------------------------------------------*/
