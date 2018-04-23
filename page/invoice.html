@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>华辉烟花信息管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" href="../css/cloud-admin.css" >
+	<link rel="stylesheet" href="../css/themes/default.css">
+	<link rel="stylesheet" href="../css/responsive.css" >
+	<link rel="stylesheet" href="../bootstrap-table/bootstrap-table.css">
+	<link rel="stylesheet" href="../js/datepicker/bootstrap-datepicker.css" />
+	<link rel="stylesheet" href="../js/select2/select2.min.css" />
+	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+	<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+
+</head>
+<body>
+	<header class="navbar clearfix navbar-fixed-top" id="header">
+		<div class="container">
+				<div class="navbar-brand">
+					<a href="index.html">
+						<img src="../img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+					</a>
+					
+					<div class="visible-xs">
+						<a href="#" class="team-status-toggle switcher btn dropdown-toggle">
+							<i class="fa fa-users"></i>
+						</a>
+					</div>
+					
+					<div id="sidebar-collapse" class="sidebar-collapse btn">
+						<i class="fa fa-bars" 
+							data-icon1="fa fa-bars" 
+							data-icon2="fa fa-bars" ></i>
+					</div>
+				</div>
+				
+				<ul class="nav navbar-nav pull-right">
+					<li class="dropdown user" id="header-user">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" src="../img/avatars/avatar3.jpg" />
+							<span class="username">Admin</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/IMShh_UI/index.html"><i class="fa fa-user"></i> 个人信息</a></li>
+							<li><a href="#"><i class="fa fa-eye"></i> 修改密码</a></li>
+							<li><a href="login.html"><i class="fa fa-power-off"></i> 退出系统</a></li>
+						</ul>
+					</li>
+				</ul>
+		</div>		
+	</header>
+	
+	<section id="page">
+		<div id="sidebar" class="sidebar-fixed">
+			<div class="sidebar-menu nav-collapse">
+				<ul id="menubar">
+				</ul>
+			</div>
+		</div>
+		
+		<div id="main-content">			
+			<div class="container">
+				<div class="modal fade" id="modaldatepicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					    <div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							    <h4 class="modal-title">请选择日期</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<div class="col-md-3">
+										<input type="text" id="startDate" class="form-control selectData" placeholder="开始日期"/>
+									</div>
+									
+									<div class="col-md-3">
+										<input type="text" id="endDate" class="form-control selectData" placeholder="结束日期"/>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+							    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							    <button id="btn_chosedate" type="button" class="btn btn-primary">确定</button>
+							</div>
+					    </div>
+					</div>
+				</div>
+				<div class="modal fade" id="modalCalculation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					    <div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							    <h4 class="modal-title">计算公式</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+								<div class="box-container">
+								<!-- BOX WITH TOOLBOX-->
+									<div class="box border green">
+										
+										<div class="toolbox">
+											<div id="grp_factor" class="btn-group">
+											  <button type="button" class="btn btn-default">价税合计</button>
+											  <button type="button" class="btn btn-default">应交增值税</button>
+											  <button type="button" class="btn btn-default">应交消费税</button>
+											  <button type="button" class="btn btn-default">城建税</button>
+											  <button type="button" class="btn btn-default">教育费附加</button>
+											  <button type="button" class="btn btn-default">税款合计</button>											  
+											</div>
+										</div>
+										<div class="toolbox">
+											<div id="grp_number" class="btn-group">
+											  <button type="button" class="btn btn-default">0</button>
+											  <button type="button" class="btn btn-default">1</button>
+											  <button type="button" class="btn btn-default">2</button>
+											  <button type="button" class="btn btn-default">3</button>
+											  <button type="button" class="btn btn-default">4</button>
+											  <button type="button" class="btn btn-default">5</button>
+											  <button type="button" class="btn btn-default">6</button>
+											  <button type="button" class="btn btn-default">7</button>
+											  <button type="button" class="btn btn-default">8</button>
+											  <button type="button" class="btn btn-default">9</button>
+											  <button type="button" class="btn btn-default">.</button>
+											</div>
+										</div>
+										<div class="toolbox">
+											<div id="grp_operation" class="btn-group">
+											  <button type="button" class="btn btn-default">+</button>
+											  <button type="button" class="btn btn-default">-</button>
+											  <button type="button" class="btn btn-default">*</button>
+											  <button type="button" class="btn btn-default">/</button>
+											  <button type="button" class="btn btn-default">(</button>
+											  <button type="button" class="btn btn-default">)</button>
+											</div>
+										</div>
+										<div class="box-body">
+											<div class="scroller" data-height="165px" data-always-visible="1" data-rail-visible="1">
+												<p id="calculation"></p>
+											</div>
+										</div>
+										<div class="toolbox bottom">
+											<div class="btn-group">
+											  <button id="btn_reback" type="button" class="btn btn-default"><i class="fa fa-mail-reply (alias)"></i></button>
+											  <button id="btn_clear" type="button" class="btn btn-default"><i class="fa fa-eraser"></i></button>											  
+											</div>
+										</div>
+										
+									</div>
+									<!-- /BOX WITH TOOLBOX-->
+								</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+							    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							    <button id="btn_save_calculation" type="button" class="btn btn-primary">确定</button>
+							</div>
+					    </div>
+					</div>
+				</div>
+				<div class="row">
+					<div id="content" class="col-lg-12">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="page-header">
+									<div class="clearfix">
+										<h3 class="content-title pull-left">开票明细</h3>
+										<span class="date-range pull-right col-md-4" >
+											<div class="input-group" >
+												<input type="text" class="form-control" placeholder="查询条件"/>
+												<div class="input-group-btn">
+													<button type="button" id="btn_datapriod" class="btn btn-default dropdown-toggle" data-toggle="dropdown">所有数据<span class="caret"></span></button>
+													<ul id="dataperiod" class="dropdown-menu" >
+													  <li><a href="javascript:;">所有数据</a></li>
+													  <li><a href="javascript:;">本月</a></li>
+													  <li><a href="javascript:;">今年</a></li>																  
+													  <li><a data-toggle="modal" data-target="#modaldatepicker"><i class="fa fa-calendar"></i>&nbsp指定日期</a></li>
+													</ul>
+												  </div>
+											</div>
+										</span>
+									</div>
+									<div class="description">开票明细</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="box border blue">
+									<div class="box-title" >
+										<div class="dropdown" style="display: inline-block; z-index: 99;">
+											<a href="javascript:;" data-toggle="dropdown" ><h4><i class="fa fa-cogs"></i></h4></a>
+										    <ul class="dropdown-menu context"  style="text-align: left; ">
+										    	<li>
+										            <a href="#"><i class="fa fa-chain (alias)"></i>&nbsp导入</a>
+										        </li>
+										        <li>
+										            <a href="#"><i class="fa fa-external-link"></i>&nbsp导出</a>
+										        </li>
+										    </ul>
+										</div>										
+										<h4><span >开票明细</span></h4>
+									</div>
+									<div class="box-body">
+										<div class="tabbable header-tabs user-profile">
+											<ul class="nav nav-tabs">
+											   <li><a href="#invoice_edit" data-toggle="tab"><i class="fa fa-edit"></i> <span class="hidden-inline-mobile">新的发货单</span></a></li>
+											   <li class="active"><a href="#invoice_overview" data-toggle="tab"><i class="fa fa-dot-circle-o"></i> <span class="hidden-inline-mobile">浏览</span></a></li>
+											</ul>
+											<div class="tab-content">
+												<div class="tab-pane fade in active" id="invoice_overview">
+													<table id="tbl_invoice" class='table table-hover'>														
+													</table>														
+												</div>
+											
+												<div class="tab-pane fade" id="invoice_edit">
+													<form class="form-horizontal" action="#">														
+														<div class="form-group">
+															<label class="col-md-3 control-label">开票日期</label> 
+															<div class="col-md-4">
+														    	<input type="text" name="invoiceDate" class="form-control selectData" value="">
+														    </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">客户名称</label> 
+															<div class="col-md-4">
+														    	<input type="text" name="customerName" class="form-control" value="">
+														    </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">价税合计</label> 
+															<div class="col-md-4">
+																<input type="text" name="amountWithTax" label="价税合计" class="form-control" value="">
+														    </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">应交增值税</label> 
+															<div class="col-md-4">
+																<input type="text" name="valueAddTax" label="应交增值税"  class="form-control" value="" readonly="readonly">
+																<input type="hidden" name="valueAddTaxCal" value="'价税合计'/1.17*0.09">
+														    </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">应交消费税</label> 
+															<div class="col-md-4">
+																<input type="text" name="exciseTax" label="应交消费税" class="form-control" value="" readonly="readonly">
+																<input type="hidden" name="exciseTaxCal" value="'价税合计'/1.17*0.15">
+														    </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">城建税</label> 
+															<div class="col-md-4">
+																<input type="text" name="constructionTax" label="城建税" class="form-control" value="" readonly="readonly">
+																<input type="hidden" name="constructionTaxCal" value="('应交增值税'+'应交消费税')*0.07">
+														    </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">教育费附加</label> 
+															<div class="col-md-4">
+																<input type="text" name="educationFee" label="教育费附加" class="form-control" value="" readonly="readonly">
+																<input type="hidden" name="educationFeeCal" value="('应交增值税'+'应交消费税')*0.05">
+														    </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">税款合计</label> 
+															<div class="col-md-4">
+																<input type="text" name="totalTax" label="税款合计" class="form-control" value="" readonly="readonly">
+																<input type="hidden" name="totalTaxCal" value="'应交增值税'+'应交消费税'+'城建税'+'教育费附加'">
+														    </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">退税</label> 
+															<div class="col-md-4">
+																<input type="text" name="drawback" class="form-control" value="" readonly="readonly">
+																<input type="hidden" name="drawbackCal" value="'价税合计'/1.17*0.28">
+														   </div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 control-label">备注</label> 
+															<div class="col-md-4">
+																<textarea name="remark" class="form-control" rows="3"></textarea>
+														    </div>
+														</div>																													
+														<div class="form-actions clearfix"> <input type="submit" value="保存" class="btn btn-primary pull-right"> </div>
+													</form>
+												</div>
+											</div>												
+										</div>											
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	<script src="../js/jquery/jquery-2.0.3.min.js"></script>
+	<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+	<script src="../bootstrap-table/bootstrap-table.js"></script>
+	<script src="../js/datepicker/bootstrap-datepicker.js"></script>
+	<script src="../js/select2/select2.min.js"></script>
+	<script src="../js/math/math.min.js"></script>
+	<script src="../js/jQuery-Cookie/jquery.cookie.min.js"></script>
+	
+	<script src="../js/script.js"></script>
+	<script>
+		jQuery(document).ready(function() {		
+			App.setPage("invoice");
+			App.init(); 
+		});
+	</script>
+	<!-- /JAVASCRIPTS -->
+</body>
+</html>

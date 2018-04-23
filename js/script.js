@@ -3344,22 +3344,7 @@ var App = function () {
 	
 	
 		
-	var getJSONObjByForm = function(form){
-		var formitems = form.find("input");
-		var oform = {};
-		$.each(formitems, function(index, item){
-			var field = $(item).attr("name");
-			oform[field] = $(item).val();
-		});
-		return oform;
-	}
 	
-	var removeFormData = function(form){
-		var formitems = form.find("input");
-		$.each(formitems, function(index, item){
-			$(item).val("");
-		});
-	}
 	
 
 	/*-----------------------------------------------------------------------------------*/
@@ -3404,6 +3389,116 @@ var App = function () {
 		});
 		
 	}
+	
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Invoice data
+	/*-----------------------------------------------------------------------------------*/	
+	var initInvoiceModule = function(){
+		$("#tbl_invoice").bootstrapTable({
+			url: "../json/invoice.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'invoiceDate',
+                title: '开票日期'
+            }, {
+                field: 'customerName',
+                title: '客户名称'
+            }, {
+                field: 'amountWithTax',
+                title: '价税合计'
+            }, {
+                field: 'valueAddTax',
+                title: '应交增值税'
+            }, {
+                field: 'exciseTax',
+                title: '应交消费税'
+            }, {
+            	field: 'constructionTax',
+                title: '城建税'
+            },{
+            	field: 'educationFee',
+                title: '教育费附加'
+            },{
+            	field: 'totalTax',
+                title: '税款合计'
+            },{
+            	field: 'drawback',
+                title: '退税'
+            },{
+                field: 'remark',
+                title: '备注'
+            }]
+		});	
+		
+		var ecal = {};
+		$("input[readonly=readonly]").dblclick(function(){
+			ecal = $(this).next();
+			$("#calculation").text(ecal.val());
+			$("#modalCalculation").modal("show");
+		});
+		
+		$("#grp_factor").children().click(function(){
+			var content = $("#calculation").text();
+			$("#calculation").text(content + "'" + $(this).html() + "'");
+		});
+		
+		$("#grp_number, #grp_operation").children().click(function(){
+			var content = $("#calculation").text();
+			$("#calculation").text(content + $(this).html());
+		});
+		
+		$("#btn_reback").click(function(){
+			var content = $("#calculation").text();
+			var iplus = content.lastIndexOf("+");
+			var iminus = content.lastIndexOf("-");
+			var imultiplication = content.lastIndexOf("*");
+			var idivision = content.lastIndexOf("/");
+			var near = Math.max.apply(null, [iplus, iminus, imultiplication, idivision]);
+			if (near == -1)
+				return;
+			content = content.substr(0, near);
+			$("#calculation").text(content);
+		});
+		
+		$("#btn_clear").click(function(){
+			$("#calculation").text("");
+		});
+		
+		$('#btn_save_calculation').click(function () {
+		      ecal.val($("#calculation").text());
+		      $("#modalCalculation").modal("hide");
+		      calculateInvoice();
+		}); 
+		
+		$("input[name=amountWithTax]").change(function(){
+			calculateInvoice();
+		});
+	}
+
+	var calculateInvoice = function(){
+		$("input[name=valueAddTax]").val(math.eval(analysisExp($("input[name=valueAddTaxCal]").val())).toFixed(2));
+		$("input[name=exciseTax]").val(math.eval(analysisExp($("input[name=exciseTaxCal]").val())).toFixed(2));
+		$("input[name=constructionTax]").val(math.eval(analysisExp($("input[name=constructionTaxCal]").val())).toFixed(2));
+		$("input[name=educationFee]").val(math.eval(analysisExp($("input[name=educationFeeCal]").val())).toFixed(2));
+		$("input[name=totalTax]").val(math.eval(analysisExp($("input[name=totalTaxCal]").val())).toFixed(2));
+		$("input[name=drawback]").val(math.eval(analysisExp($("input[name=drawbackCal]").val())).toFixed(2));
+	}
+	var analysisExp = function(expression){
+		var str = expression;
+		var index = str.indexOf("'");
+		if (index < 0){
+			return expression;
+		}
+		var factor = str.substr(index+1);
+		index = factor.indexOf("'");
+		factor = factor.substr(0, index);
+		var factorVal = $("input[label="+ factor +"]").val();
+		var nexpression = expression.replace("'"+factor+"'", factorVal);
+		var exp = analysisExp(nexpression);		
+		return exp;
+	}
 	/*-----------------------------------------------------------------------------------*/
 	/*	Handles Profile Edit
 	/*-----------------------------------------------------------------------------------*/
@@ -3427,6 +3522,11 @@ var App = function () {
             	handleMenu("/IMShh_UI/page/deliver.html");
             	handleDatePicker();
             	initDeliverModule();
+            }
+            if (App.isPage("invoice")){
+            	handleMenu("/IMShh_UI/page/invoice.html");
+            	handleDatePicker();
+            	initInvoiceModule();
             }
 			if (App.isPage("widgets_box")) {
 				handleBoxSortable(); //Function to handle Box sortables
@@ -3672,6 +3772,27 @@ var deleteOrderItem = function(index){
 	$("#tbl_orderitem").bootstrapTable("refreshOptions", {data: oorderitems});
 }
 
+/*-----------------------------------------------------------------------------------*/
+/*	公共函数
+/*-----------------------------------------------------------------------------------*/
+var getJSONObjByForm = function(form){
+	var formitems = form.find("input");
+	var oform = {};
+	$.each(formitems, function(index, item){
+		var field = $(item).attr("name");
+		oform[field] = $(item).val();
+	});
+	return oform;
+}
+	
+var removeFormData = function(form){
+	var formitems = form.find("input");
+	$.each(formitems, function(index, item){
+		$(item).val("");
+	});
+}
+
+	
 $.fn.datepicker.dates['cn'] = {   //切换为中文显示  
     days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],  
             daysShort: ["日", "一", "二", "三", "四", "五", "六", "七"],  
@@ -3680,5 +3801,5 @@ $.fn.datepicker.dates['cn'] = {   //切换为中文显示
             monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],  
             today: "今天",  
             clear: "清除"  
-    };	          
+};	          
 	 
