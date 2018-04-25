@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>华辉烟花信息管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" href="../css/cloud-admin.css" >
+	<link rel="stylesheet" href="../css/themes/default.css">
+	<link rel="stylesheet" href="../css/responsive.css" >
+	<link rel="stylesheet" href="../bootstrap-table/bootstrap-table.css">
+	<link rel="stylesheet" href="../js/datepicker/bootstrap-datepicker.css" />
+	<link rel="stylesheet" href="../js/select2/select2.min.css" />
+	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+	<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+
+</head>
+<body>
+	<header class="navbar clearfix navbar-fixed-top" id="header">
+		<div class="container">
+				<div class="navbar-brand">
+					<a href="index.html">
+						<img src="../img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+					</a>
+					
+					<div class="visible-xs">
+						<a href="#" class="team-status-toggle switcher btn dropdown-toggle">
+							<i class="fa fa-users"></i>
+						</a>
+					</div>
+					
+					<div id="sidebar-collapse" class="sidebar-collapse btn">
+						<i class="fa fa-bars" 
+							data-icon1="fa fa-bars" 
+							data-icon2="fa fa-bars" ></i>
+					</div>
+				</div>
+				
+				<ul class="nav navbar-nav pull-right">
+					<li class="dropdown user" id="header-user">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" src="../img/avatars/avatar3.jpg" />
+							<span class="username">Admin</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/IMShh_UI/index.html"><i class="fa fa-user"></i> 个人信息</a></li>
+							<li><a href="#"><i class="fa fa-eye"></i> 修改密码</a></li>
+							<li><a href="login.html"><i class="fa fa-power-off"></i> 退出系统</a></li>
+						</ul>
+					</li>
+				</ul>
+		</div>		
+	</header>
+	
+	<section id="page">
+		<div id="sidebar" class="sidebar-fixed" >
+			<div class="sidebar-menu nav-collapse" >
+				<ul id="menubar" >
+				</ul>
+			</div>
+		</div>
+		
+		<div id="main-content">			
+			<div class="container">
+				<div class="modal fade" id="modaldatepicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					    <div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							    <h4 class="modal-title">请选择日期</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<div class="col-md-3">
+										<input type="text" id="startDate" class="form-control selectData" placeholder="开始日期"/>
+									</div>
+									
+									<div class="col-md-3">
+										<input type="text" id="endDate" class="form-control selectData" placeholder="结束日期"/>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+							    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							    <button id="btn_chosedate" type="button" class="btn btn-primary">确定</button>
+							</div>
+					    </div>
+					</div>
+				</div>
+				<div class="modal fade" id="modalstoragedtledit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					    <div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							    <h4 class="modal-title">入库明细</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<div class="box-container">
+										<form class="form-horizontal" id="storagedelForm" action="#">
+											<div class="form-group">
+												<label class="col-md-3 control-label">入库日期</label> 
+												<div class="col-md-7">
+													<input type="hidden" name="id" value=""/>
+											    	<input type="text" name="name" class="form-control selectData" value="">
+											    </div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label">货号</label> 
+												<div class="col-md-7">
+													<input type="text" name="pdtNo" class="form-control" value="">
+											    </div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label">含量</label> 
+												<div class="col-md-7">
+													<input type="text" name="content" class="form-control" value="">
+											    </div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label">数量</label> 
+												<div class="col-md-7">
+													<input type="text" name="amount" class="form-control" value="">
+											    </div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label">关联订单</label> 
+												<div class="col-md-7">
+													<select id="relorder" name="orderId" class="col-md-12">
+													</select>
+											    </div>
+											</div>
+											
+											<div class="form-group">
+												<label class="col-md-3 control-label">备注</label> 
+												<div class="col-md-7">
+													<textarea name="remark" class="form-control" rows="3"></textarea>
+											    </div>
+											</div>
+										</form>
+										<!-- /BOX WITH TOOLBOX-->
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+							    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							    <button id="btn_save_storagedtl" type="button" class="btn btn-primary">确定</button>
+							</div>
+					    </div>
+					</div>
+				</div>
+				<div class="row">
+					<div id="content" class="col-lg-12">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="page-header-compact">
+									<div class="page-title">入库详情</div>
+								</div>								
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div class="tabbable">
+											<ul class="nav nav-tabs">
+											   <li class="active"><a href="#tab_1_1" data-toggle="tab"><i class="fa fa-inbox"></i>入库明细</a></li>
+											   <li><a href="#tab_1_2" data-toggle="tab"><i class="fa fa-sitemap"></i> 库存</a></li>
+											</ul>
+											<div class="tab-content">
+											    <div class="tab-pane fade in active" id="tab_1_1">
+												    <div class="divide-10"></div>
+												    <div class="toolbox ">
+												    	<div class="btn-group">
+												    		<button id="btn_import" type="button" class="btn btn-default" title="导入"><i class="fa fa-download"></i></button>
+												    		<button id="btn_add" type="button" class="btn btn-default" title="新增" data-toggle="modal" data-target="#modalstoragedtledit"><i class="fa  fa-pencil"></i></button>
+												    		<button id="btn_edit" type="button" class="btn btn-default" title="修改"><i class="fa  fa-edit (alias)"></i></button>
+												    		<button id="btn_delete" type="button" class="btn btn-default" title="删除"><i class="fa  fa-times"></i></button>
+												    		<button id="btn_export" type="button" class="btn btn-default" title="导出"><i class="fa  fa-external-link"></i></button>
+												    	</div>
+												    	
+												    	<span class="pull-right col-md-4" >
+															<div class="input-group" >
+																<input type="text" class="form-control" placeholder="查询条件"/>
+																<div class="input-group-btn">
+																	<button type="button" id="btn_datapriod" class="btn btn-default dropdown-toggle" data-toggle="dropdown">所有数据<span class="caret"></span></button>
+																	<ul id="dataperiod" class="dropdown-menu" >
+																	  <li><a href="javascript:;">所有数据</a></li>
+																	  <li><a href="javascript:;">本月</a></li>
+																	  <li><a href="javascript:;">今年</a></li>																  
+																	  <li><a data-toggle="modal" data-target="#modaldatepicker"><i class="fa fa-calendar"></i>&nbsp指定日期</a></li>
+																	</ul>
+																</div>
+															</div>
+														</span>
+												    </div>
+											    	<div class="divide-10"></div>
+											    	<table id="tbl_storagedetail"></table>
+											    </div>
+											    <div class="tab-pane fade" id="tab_1_2">
+													<div class="divide-10"></div>
+													<div class="toolbox ">												    	
+												    	<span class="pull-right col-md-3" >
+												    		<input type="text" class="form-control" placeholder="货号"/>															
+														</span>
+												    </div>
+											    	<div class="divide-10"></div>
+											    	<table id="tbl_storage"></table>
+											    </div>
+											   
+											</div>
+										</div>
+									</div>
+								</div>											
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	<script src="../js/jquery/jquery-2.0.3.min.js"></script>
+	<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+	<script src="../bootstrap-table/bootstrap-table.js"></script>
+	<script src="../js/datepicker/bootstrap-datepicker.js"></script>
+	<script src="../js/select2/select2.min.js"></script>
+	<script src="../js/jQuery-Cookie/jquery.cookie.min.js"></script>
+	
+	<script src="../js/script.js"></script>
+	<script>
+		jQuery(document).ready(function() {		
+			App.setPage("storage");
+			App.init(); 
+		});
+	</script>
+	<!-- /JAVASCRIPTS -->
+</body>
+</html>

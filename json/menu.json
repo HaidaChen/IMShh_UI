@@ -15,13 +15,13 @@
                 "submenu": null
             }, 
             {
-            	"name": "发货单", 
+            	"name": "出库单", 
                 "url": "/IMShh_UI/page/deliver.html",
                 "submenu": null
             },                       
             {
-            	"name": "库存", 
-                "url": "/IMShh_UI/storage/main.do",
+            	"name": "入库单", 
+                "url": "/IMShh_UI/page/storage.html",
                 "submenu": null
             }, 
             {
@@ -33,7 +33,7 @@
     {
     	"name": "账务管理",
         "url": "",
-        "icon": "fa fa-eur",
+        "icon": "fa fa-money",
         "submenu":[
         	{
         		"name": "应收", 
@@ -84,17 +84,12 @@
         "submenu":[
         	{
         		"name": "用户管理", 
-                "url": "user/main.do",
+                "url": "/IMShh_UI/page/user.html",
                 "submenu": null
             },
             {
             	"name": "角色管理", 
-                "url": "role/main.do",
-                "submenu": null
-            },
-            {
-            	"name": "系统权限", 
-                "url": "user/main.do",
+                "url": "/IMShh_UI/page/role.html",
                 "submenu": null
             }]
     }

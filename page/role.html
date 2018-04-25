@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>华辉烟花信息管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" href="../css/cloud-admin.css" >
+	<link rel="stylesheet" href="../css/themes/default.css">
+	<link rel="stylesheet" href="../css/responsive.css" >
+	<link rel="stylesheet" href="../js/jstree/themes/default/style.min.css">
+	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+	<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+
+</head>
+<body>
+	<header class="navbar clearfix navbar-fixed-top" id="header">
+		<div class="container">
+				<div class="navbar-brand">
+					<a href="index.html">
+						<img src="../img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+					</a>
+					
+					<div class="visible-xs">
+						<a href="#" class="team-status-toggle switcher btn dropdown-toggle">
+							<i class="fa fa-users"></i>
+						</a>
+					</div>
+					
+					<div id="sidebar-collapse" class="sidebar-collapse btn">
+						<i class="fa fa-bars" 
+							data-icon1="fa fa-bars" 
+							data-icon2="fa fa-bars" ></i>
+					</div>
+				</div>
+				
+				<ul class="nav navbar-nav pull-right">
+					<li class="dropdown user" id="header-user">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" src="../img/avatars/avatar3.jpg" />
+							<span class="username">Admin</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/IMShh_UI/index.html"><i class="fa fa-user"></i> 个人信息</a></li>
+							<li><a href="#"><i class="fa fa-eye"></i> 修改密码</a></li>
+							<li><a href="login.html"><i class="fa fa-power-off"></i> 退出系统</a></li>
+						</ul>
+					</li>
+				</ul>
+		</div>		
+	</header>
+	
+	<section id="page">
+		<div id="sidebar" class="sidebar-fixed">
+			<div class="sidebar-menu nav-collapse">
+				<ul id="menubar">
+				</ul>
+			</div>
+		</div>
+		
+		<div id="main-content">			
+			<div class="container">
+				<div class="modal fade" id="roleEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  
+				    <div class="modal-dialog" role="document">  
+				        <div class="modal-content">  
+				            <div class="modal-header">  
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close">  
+				                    <span aria-hidden="true">×</span>  
+				                </button>  
+				                <h4 class="modal-title" id="myModalLabel">新的角色</h4>  
+				            </div>  
+				            <div class="modal-body">  
+				                <form id="formRole" method="post" role="form" class="form-horizontal" action="save.do">
+				                    <div class="form-group" style="margin-top:15px">
+				                        <label class="control-label col-sm-3" for="txt_name">角色名称</label>
+				                        <div class="col-sm-8">
+				                            <input type="text" class="form-control" id="txt_name" name="name" required="required">
+				                        </div>	                                                
+				                    </div>
+				                    <div class="form-group" style="margin-top:15px">
+				                        <label class="control-label col-sm-3" for="txt_remark">备注</label>
+				                        <div class="col-sm-8">
+				                        	<textarea rows="4" class="form-control" id="txt_remark" name="remark"></textarea>
+				                        </div>	                                                
+				                    </div>  	                    
+				                </form>  
+				            </div>  
+				            <div class="modal-footer">
+				                <button id="btn_save" type="button" class="btn btn-primary">保存</button>  
+				                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>  
+				            </div>  
+				        </div>  
+				    </div>  
+				</div>
+				<div class="row">
+					<div id="content" class="col-lg-12">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="page-header">
+									<div class="clearfix">
+										<h3 class="content-title pull-left">角色信息</h3>										
+									</div>
+									<div class="description">不同的角色拥有不同的系统访问权限</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="box">							
+									<div class="box-body">
+										<div class="panel panel-default">
+										  <div class="panel-body">
+											<div class="row vertical-spacing">
+									    		<div class="col-md-3">
+									    			<div class="row">
+									    			    <div class="col-md-12 pull-right">
+									    			    	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#roleEditModal">
+									    			    		<i class="glyphicon glyphicon-plus"></i>
+									    			    	</button>
+									    			    	<button id="btn_delete" type="button" class="btn btn-default">
+									    			    		<i class="glyphicon glyphicon-minus"></i>
+									    			    	</button>
+									    			    </div>    			    
+									    			</div>
+									    			<div class="row">
+									    				<div class="col-md-12">
+									    					<select id="select_role" size="10" class="form-control">
+									    						
+									    					</select>
+									    				</div>
+									    			</div>
+									    		</div>
+									    		
+									    		<div id="sideAuthority" class="col-md-7" style="display: none;">
+									    			<div class="row">
+									    				<div class="col-md-12">
+									    					<p id="remark" class="bg-info" style="padding: 8px"></p>
+									    				</div>
+									    			</div>
+									    			<div class="row vertical-spacing">
+									    				<div class="col-md-12">
+									    					<button id="btn_save_authortiy"><i class="fa fa-save (alias)"></i>&nbsp;保存</button>
+									    				</div>
+									    			</div>
+									    			<div class="row">
+									    				<div class="col-md-12">
+									    					<div id="authorityTree"></div>
+									    				</div>
+									    			</div>
+									    		</div>
+									    </div>
+										  </div>
+										  
+										</div>
+									</div>
+								</div>
+								<!-- /BOX -->
+							</div>
+								
+						</div>
+					
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	
+	
+	<script src="../js/jquery/jquery-2.0.3.min.js"></script>
+	<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+	<script src="../js/jstree/jstree.min.js"></script>
+	
+	<script src="../js/jQuery-Cookie/jquery.cookie.min.js"></script>
+	
+	<script src="../js/script.js"></script>
+	<script>
+		jQuery(document).ready(function() {		
+			App.setPage("role");
+			App.init(); 
+		});
+	</script>
+	<!-- /JAVASCRIPTS -->
+</body>
+</html>

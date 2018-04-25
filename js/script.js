@@ -3389,7 +3389,91 @@ var App = function () {
 		});
 		
 	}
-	
+
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Storage data
+	/*-----------------------------------------------------------------------------------*/	
+	var initStorageModule = function(){
+		$("#tbl_storagedetail").bootstrapTable({
+			url: "../json/storageDetail.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+				checkbox: true
+			},{
+                field: 'storageDate',
+                title: '入库日期'
+            }, {
+                field: 'pdtNo',
+                title: '货号'
+            }, {
+                field: 'content',
+                title: '含量'
+            }, {
+                field: 'amount',
+                title: '数量'
+            }, {
+                field: 'orderIdentify',
+                title: '关联订单号'
+            }, {
+                field: 'remark',
+                title: '备注'
+            }]
+		});	
+		
+		$("#tbl_storage").bootstrapTable({
+			url: "../json/storage.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'pdtNo',
+                title: '货号'
+            }, {
+                field: 'content',
+                title: '含量'
+            }, {
+                field: 'amount',
+                title: '库存'
+            }]
+		});	
+		
+		$.getJSON("/IMShh_UI/json/order.json", function (data){
+			$("#relorder").append("<option></option>");
+			$.each(data.rows, function(index, obj){
+				$("#relorder").append("<option value='"+obj.id+"'>"+ obj.identify +"</option>");
+			});
+			$("#relorder").select2({
+			    placeholder: "关联订单",
+			    allowClear: true
+			});
+		});
+		
+		$("#btn_edit").click(function(){
+			var ids = getChoseRows($("#tbl_storagedetail"));
+			if (ids.length == 0){
+				alert("请选择要修改的记录");
+				return;
+			}
+			if (ids.length > 1){
+				alert("一次只可以修改一条记录");
+				return;
+			}
+			$("#modalstoragedtledit").modal("show");
+		});
+		
+		$("btn_delete").click(function(){
+			var ids = getChoseRows($("#tbl_storagedetail"));
+			if (ids.length == 0){
+				alert("请选择要删除的记录");
+				return;
+			}			
+		});
+	}
+
+
 	/*-----------------------------------------------------------------------------------*/
 	/*	init Invoice data
 	/*-----------------------------------------------------------------------------------*/	
@@ -3551,7 +3635,271 @@ var App = function () {
 		
 	}
 
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Supplier data
+	/*-----------------------------------------------------------------------------------*/	
+	var initSupplierModule = function(){
+		$("#tbl_supplier").bootstrapTable({
+			url: "../json/supplier.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'name',
+                title: '供应商名称'
+            }, {
+                field: 'address',
+                title: '联系地址'
+            }, {
+                field: 'phone',
+                title: '联系电话'
+            }, {
+                field: 'email',
+                title: '邮箱'
+            }, {
+                field: 'fax',
+                title: '传真'
+            }, {
+                field: 'contacts',
+                title: '联系人'
+            }, {
+                field: 'remark',
+                title: '备注'
+            }, {
+                field: '',
+                title: '操作',
+                formatter: function(value,row,index){
+					var strHtml = '<a href="javascript:;" onclick="editSupplier('+ row.id +')"><i class="fa fa-edit (alias)"></i></a>';
+					strHtml += '&nbsp;<a href="javascript:;" onclick="javascript:deleteSupplier(' + row.id + ')"><i class="fa fa-minus"></a>';
+					return strHtml;
+				}
+            }]
+		});
+		
+		$("#btn_save_supplier").click(function(){
+			$("#modalSupplierEdit").modal("hide");
+		});
+		
+		$('#modalSupplierEdit').on("hide.bs.modal", function(){
+			removeFormData($("#supplierForm"));
+		});
+		
+	}
+
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Product data
+	/*-----------------------------------------------------------------------------------*/	
+	var initProductModule = function(){
+		$("#tbl_product").bootstrapTable({
+			url: "../json/product.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'code',
+                title: '编码'
+            }, {
+                field: 'name',
+                title: '产品名称'
+            }, {
+                field: 'specification',
+                title: '规格'
+            }, {
+                field: 'model',
+                title: '型号'
+            }, {
+                field: 'lineDate',
+                title: '上线日期'
+            }, {
+                field: 'remark',
+                title: '备注'
+            }, {
+                field: '',
+                title: '操作',
+                formatter: function(value,row,index){
+					var strHtml = '<a href="javascript:;" onclick="editProduct('+ row.id +')"><i class="fa fa-edit (alias)"></i></a>';
+					strHtml += '&nbsp;<a href="javascript:;" onclick="javascript:deleteProduct(' + row.id + ')"><i class="fa fa-minus"></a>';
+					return strHtml;
+				}
+            }]
+		});
+		
+		$("#btn_save_product").click(function(){
+			$("#modalProductEdit").modal("hide");
+		});
+		
+		$('#modalProductEdit').on("hide.bs.modal", function(){
+			removeFormData($("#productForm"));
+		});
+		
+	}
+
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Material data
+	/*-----------------------------------------------------------------------------------*/	
+	var initMaterialModule = function(){
+		$("#tbl_material").bootstrapTable({
+			url: "../json/material.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'name',
+                title: '品名'
+            }, {
+                field: 'specification',
+                title: '规格'
+            }, {
+                field: 'unit',
+                title: '单位'
+            }, {
+                field: 'category',
+                title: '分类',
+                formatter: function(value,row,index){
+                	if (value == 1) return '木方';
+                	else if (value == 2) return '纸箱';
+                	else return '其他';
+                }
+            }, {
+                field: 'remark',
+                title: '备注'
+            }, {
+                field: '',
+                title: '操作',
+                formatter: function(value,row,index){
+					var strHtml = '<a href="javascript:;" onclick="editMaterial('+ row.id +')"><i class="fa fa-edit (alias)"></i></a>';
+					strHtml += '&nbsp;<a href="javascript:;" onclick="javascript:deleteMaterial(' + row.id + ')"><i class="fa fa-minus"></a>';
+					return strHtml;
+				}
+            }]
+		});
+		
+		$("#btn_save_material").click(function(){
+			$("#modalMaterialEdit").modal("hide");
+		});
+		
+		$('#modalMaterialEdit').on("hide.bs.modal", function(){
+			removeFormData($("#materialForm"));
+		});
+		
+	}
+
 	
+	/*-----------------------------------------------------------------------------------*/
+	/*	init User data
+	/*-----------------------------------------------------------------------------------*/	
+	var initUserModule = function(){
+		$("#tbl_user").bootstrapTable({
+			url: "../json/user.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'userName',
+                title: '用户名'
+            }, {
+                field: 'password',
+                title: '密码'
+            }, {
+                field: 'fullName',
+                title: '姓名'
+            }, {
+                field: 'email',
+                title: 'Email'
+            }, {
+                field: 'weichat',
+                title: '微信'
+            }, {
+                field: 'roles',
+                title: '所属角色',
+                formatter: function(value,row,index){
+                	var roleStr = '';
+                	$.each(value, function(index, role){
+                		roleStr += role.name + ",";
+                	});
+                	if (roleStr != ''){
+                		roleStr = roleStr.substr(0, roleStr.length -1);
+                	}
+                	return roleStr;
+                }
+            }, {
+                field: '',
+                title: '操作',
+                formatter: function(value,row,index){
+					var strHtml = '<a href="javascript:;" onclick="editUser('+ row.id +')"><i class="fa fa-edit (alias)"></i></a>';
+					strHtml += '&nbsp;<a href="javascript:;" onclick="javascript:deleteUser(' + row.id + ')"><i class="fa fa-minus"></a>';
+					return strHtml;
+				}
+            }]
+		});
+		
+		$("#btn_save_user").click(function(){
+			$("#modalUserEdit").modal("hide");
+		});
+		
+		$('#modalUserEdit').on("hide.bs.modal", function(){
+			removeFormData($("#userForm"));
+		});
+		
+	}
+
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Role data
+	/*-----------------------------------------------------------------------------------*/	
+	var initRoleModule = function(){
+		var rolelist = $("#select_role");
+		$.getJSON("/IMShh_UI/json/role.json", function (data){
+			$.each(data.rows, function(index, role) {
+				rolelist.append("<option value='" + role.id + "' remark='"+ role.remark +"'>" + role.name + "</option>");
+			});
+		});
+		
+		$("#btn_saverole").click(function(){
+	        $("#formRole").submit();        
+		});
+		
+		$("#btn_deleterole").click(function(){		
+			var roleId = $("#select_role").val();
+			if(roleId == ""){
+				alert("请选择要删除的角色");
+				return;
+			}
+			
+			if (!confirm("确认要删除该角色吗")) {
+	            return;
+	        }
+			
+			/*$.ajax({
+				type: "POST",
+				url: "delete.do?id="+roleId,
+				success: function(result){
+					$("#select_role option[value='" + roleId + "']").remove()
+				}
+			});*/
+		});
+		
+		$("#select_role").change(function(){
+			var remark = $(this).find("option:selected").attr("remark");
+			$("#remark").text(remark);
+			loadAuTree($(this).val());
+			$("#sideAuthority").show();
+		});
+		
+		$("#btn_save_authortiy").click(function(){
+			var roleId = $("#select_role").val();
+			var url = "saveAuthority.do?roleId="+roleId+"&authorityIds="+ids;
+			$.ajax({"url": url, success: function(){
+				alert("角色权限保存成功");
+			}});
+		});
+		
+	}
+	
+
 	/*-----------------------------------------------------------------------------------*/
 	/*	Handles Profile Edit
 	/*-----------------------------------------------------------------------------------*/
@@ -3576,6 +3924,11 @@ var App = function () {
             	handleDatePicker();
             	initDeliverModule();
             }
+            if (App.isPage("storage")){
+            	handleMenu("/IMShh_UI/page/storage.html");
+            	handleDatePicker();
+            	initStorageModule();
+            }
             if (App.isPage("invoice")){
             	handleMenu("/IMShh_UI/page/invoice.html");
             	handleDatePicker();
@@ -3584,6 +3937,27 @@ var App = function () {
             if (App.isPage("customer")){
             	handleMenu("/IMShh_UI/page/customer.html");
             	initCustomerModule();
+            }
+            if (App.isPage("supplier")){
+            	handleMenu("/IMShh_UI/page/supplier.html");
+            	initSupplierModule();
+            }
+            if (App.isPage("product")){
+            	handleMenu("/IMShh_UI/page/product.html");
+            	handleDatePicker();
+            	initProductModule();
+            }
+            if (App.isPage("material")){
+            	handleMenu("/IMShh_UI/page/material.html");
+            	initMaterialModule();
+            }
+            if (App.isPage("user")){
+            	handleMenu("/IMShh_UI/page/user.html");
+            	initUserModule();
+            }
+            if (App.isPage("role")){
+            	handleMenu("/IMShh_UI/page/role.html");
+            	initRoleModule();
             }
 			if (App.isPage("widgets_box")) {
 				handleBoxSortable(); //Function to handle Box sortables
@@ -3839,6 +4213,74 @@ var deleteCustomer = function(custId){
 var editCustomer = function(custId){
 	alert(custId);
 }
+
+/*-----------------------------------------------------------------------------------*/
+/*	Product Moduel Script
+/*-----------------------------------------------------------------------------------*/
+var deleteProduct = function(pdtId){
+	alert(pdtId);
+}
+
+var editProduct = function(pdtId){
+	alert(pdtId);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Supplier Moduel Script
+/*-----------------------------------------------------------------------------------*/
+var deleteSupplier = function(suppId){
+	alert(suppId);
+}
+
+var editSupplier = function(suppId){
+	alert(suppId);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Material Moduel Script
+/*-----------------------------------------------------------------------------------*/
+var deleteMaterial = function(mtrlId){
+	alert(mtrlId);
+}
+
+var editMaterial = function(mtrlId){
+	alert(mtrlId);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	User Moduel Script
+/*-----------------------------------------------------------------------------------*/
+var deleteUser = function(userId){
+	alert(userId);
+}
+
+var editUser = function(userId){
+	alert(userId);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Role Moduel Script
+/*-----------------------------------------------------------------------------------*/
+var ids = [];
+function loadAuTree(roleId){
+	ids = [];
+	var tree = $('#authorityTree');
+	tree.data('jstree', false).empty();
+	tree.jstree({
+	    'core' : {
+	      'data' : {
+	        "url" : "../json/authority.json",
+	        "dataType" : "json"
+	      }
+	    },
+	    "plugins" : ["checkbox" ]
+	});	
+	
+	tree.on('changed.jstree', function (e, data){
+		 ids = data.selected;
+	 });
+}
+
 /*-----------------------------------------------------------------------------------*/
 /*	公共函数
 /*-----------------------------------------------------------------------------------*/
@@ -3859,6 +4301,14 @@ var removeFormData = function(form){
 	});
 }
 
+var getChoseRows = function(table){
+	var selections = table.bootstrapTable('getSelections');
+	var ids = [];
+	$.each(selections, function(index, res) {
+		ids[index] = res.id;
+	});
+	return ids;
+}
 	
 $.fn.datepicker.dates['cn'] = {   //切换为中文显示  
     days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],  

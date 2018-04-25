@@ -1,0 +1,24 @@
+{
+	"total":2, 
+	"rows":[
+		{
+			"id":"001",
+			"userName":"admin",
+			"password":"admin",
+			"fullName":"admin",
+			"email":"12345@qq.com",
+			"weichat":"1234567",
+			"roles": [{"id": "001", "name": "系统管理员", "remark": "系统管理员，负责管理系统用户以及为用户分配权限"}]
+		},
+		{
+			"id":"1520522508092",
+			"userName":"mfq",
+			"password":"mfq",
+			"fullName":"毛发启",
+			"email":"2345t@qq.com",
+			"weichat":"2345678",
+			"roles":  [{"id": "001", "name": "系统管理员", "remark": "系统管理员，负责管理系统用户以及为用户分配权限"},
+					   {"id": "002", "name": "业务管理员", "remark": "业务管理员，可以访问系统管理模块之外的所有模块"}]
+		}
+	]
+}
