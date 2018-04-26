@@ -10,8 +10,8 @@
 		        "submenu": null
 	        }, 
         	{
-        		"name": "采购单", 
-                "url": "/IMShh_UI/purchase/main.do",
+        		"name": "耗材接收单", 
+                "url": "/IMShh_UI/page/receiptCons.html",
                 "submenu": null
             }, 
             {
@@ -37,17 +37,17 @@
         "submenu":[
         	{
         		"name": "应收", 
-            	"url": "http://localhost:8080/IMShh/jsp/finance/teller/receivable.html",
+            	"url": "/IMShh_UI/page/receivable.html",
             	"submenu": null
             },
             {
             	"name": "应付", 
-                "url": "http://localhost:8080/IMShh/jsp/finance/teller/payable.html",
+                "url": "/IMShh_UI/page/payment.html",
                 "submenu": null
             },
             {
             	"name": "账户管理", 
-                "url": "http://localhost:8080/IMShh/jsp/finance/account/index.html",
+                "url": "/IMShh_UI/page/account.html",
                 "submenu": null
             }]
     },

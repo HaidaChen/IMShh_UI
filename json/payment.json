@@ -1,0 +1,8 @@
+{
+	"rows":[		
+	       {"purchase": "兴通快干胶粉", "arrearsulm": 0.00, "paidulm": 1000.00, "arrearscm": null, "paidcm": null, "arrears": 0.00},
+	       {"purchase": "宇兴化工", "arrearsulm": 13260.00, "paidulm": null, "arrearscm": null, "paidcm": null, "arrears": 13260.00},
+	       {"purchase": "虹翔兰光剂", "arrearsulm": 11687.00, "paidulm": null, "arrearscm": null, "paidcm": null, "arrears": 11687.00},
+	       {"purchase": "绿闪剂刘守如", "arrearsulm": 27480.00, "paidulm": 1000.00, "arrearscm": 14820, "paidcm": null, "arrears": 42300.00}
+		]
+}

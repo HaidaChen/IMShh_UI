@@ -3343,8 +3343,56 @@ var App = function () {
 	}
 	
 	
+	/*-----------------------------------------------------------------------------------*/
+	/*	Load ReceiptConsum data
+	/*-----------------------------------------------------------------------------------*/	
+	var initReceiptConsModule = function(){
+		$("#tbl_receiptCons").bootstrapTable({
+			url: "../json/receiptCons.json",
+			method: "get",
+			pagination: true,
+			sidePagination: "server", 
+			columns: [{
+                field: 'receiptDate',
+                title: '接收日期'
+            }, {
+                field: 'suppName',
+                title: '供应商'
+            }, {
+                field: 'materialName',
+                title: '品名'
+            }, {
+                field: 'specification',
+                title: '规格'
+            }, {
+                field: 'unit',
+                title: '单位'
+            }, {
+                field: 'amount',
+                title: '数量'
+            }, {
+                field: 'unitPrice',
+                title: '单价'
+            }, {
+                field: 'totlemnt',
+                title: '合计'
+            }, {
+                field: 'remark',
+                title: '备注'
+            }]
+		});
 		
-	
+		$.getJSON("/IMShh_UI/json/material.json", function (data){
+			$("#relmaterial").append("<option></option>");
+			$.each(data.rows, function(index, obj){
+				$("#relmaterial").append("<option value='"+obj.id+"'>"+ obj.name + " " + obj.specification +"</option>");
+			});
+			$("#relmaterial").select2({
+			    placeholder: "关联原材料",
+			    allowClear: true
+			});
+		});
+	}
 	
 
 	/*-----------------------------------------------------------------------------------*/
@@ -3584,6 +3632,133 @@ var App = function () {
 		return exp;
 	}
 	
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Receivable data
+	/*-----------------------------------------------------------------------------------*/	
+	var initReceivableModule = function(){
+		var date = new Date();
+		$("#tbl_receivable").bootstrapTable({
+			url: "../json/receivable.json",
+			method: "get",
+			pagination: false,
+			sidePagination: "server", 
+			columns: [{
+                field: 'customer',
+                title: '客户单位'
+            }, {
+                field: 'receiveulm',
+                title: '截止' + date.getFullYear() + '年' + date.getMonth() + '月收款'
+            }, {
+                field: 'retainageulm',
+                title: '截止' + date.getFullYear() + '年' + date.getMonth() + '月尾款'
+            }, {
+                field: 'amountcm',
+                title: date.getFullYear() + '年' + (date.getMonth() + 1) + '月金额'
+            }, {
+                field: 'receivecm',
+                title: date.getFullYear() + '年' + (date.getMonth() + 1) + '月收款'
+            }, {
+                field: 'retainagecm',
+                title: date.getFullYear() + '年' + (date.getMonth() + 1) + '月尾款'
+            }, {
+                field: 'amount',
+                title: '截止当前金额'
+            }, {
+                field: 'receive',
+                title: '截止当前收款'
+            }, {
+                field: 'retainage',
+                title: '截止当前尾款'
+            }, {
+            	field: '',
+            	title: '查看',
+            	formatter: function(value,row,index){
+            		return '&nbsp; <a href="javascript:;" onclick="editCustomer()" title="收款明细"><i class="fa fa-money"></i></a>';
+            	}
+            }]
+		});
+		
+	}	
+	
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Payment data
+	/*-----------------------------------------------------------------------------------*/	
+	var initPaymentModule = function(){
+		var date = new Date();
+		$("#tbl_payment").bootstrapTable({
+			url: "../json/payment.json",
+			method: "get",
+			pagination: false,
+			sidePagination: "server", 
+			columns: [{
+                field: 'purchase',
+                title: '往来单位'
+            }, {
+                field: 'arrearsulm',
+                title: '截止' + date.getFullYear() + '年' + date.getMonth() + '月欠款'
+            }, {
+                field: 'paidulm',
+                title: '截止' + date.getFullYear() + '年' + date.getMonth() + '月付款'
+            }, {
+                field: 'arrearscm',
+                title: date.getFullYear() + '年' + (date.getMonth() + 1) + '月欠款'
+            }, {
+                field: 'paidcm',
+                title: date.getFullYear() + '年' + (date.getMonth() + 1) + '月付款'
+            }, {
+                field: 'arrears',
+                title: '截止当前欠款'
+            }, {
+            	field: '',
+            	title: '查看',
+            	formatter: function(value,row,index){
+            		return '<a href="javascript:;" onclick="editCustomer()" title="接收明细"><i class="fa fa-truck"></i></a> &nbsp; <a href="javascript:;" onclick="editCustomer()" title="付款明细"><i class="fa fa-money"></i></a>';
+            	}
+            }]
+		});
+		
+	}
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Account data
+	/*-----------------------------------------------------------------------------------*/	
+	var initAccountModule = function(){
+		$.ajax({
+			url: "/IMShh_UI/json/account.json",
+			success: function(result){
+				var accounts = result;
+				
+				$.each(accounts, function(index, account){
+					account.bankLogo
+					var card = new CreditCard();
+					if (account.accountType == 1){
+						card.createCard($("#div_public"), account);
+					}
+					
+					if (account.accountType == 2){
+						card.createCard($("#div_private"), account);
+					}
+				});
+			}
+		});	
+		$("#div_add_pub").click(function(){
+			var card = new CreditCard();
+			card.createCard($("#div_public"));
+		});
+		$("#div_add_pri").click(function(){
+			var card = new CreditCard();
+			card.createCard($("#div_private"));
+		});
+	}
+
+	/*-----------------------------------------------------------------------------------*/
+	/*	init Account data
+	/*-----------------------------------------------------------------------------------*/	
+	var initAccountDetailModule = function(){
+		
+	}
+
+
 	/*-----------------------------------------------------------------------------------*/
 	/*	init Customer data
 	/*-----------------------------------------------------------------------------------*/	
@@ -3919,6 +4094,11 @@ var App = function () {
             	handleDatePicker();
             	initOrderModule(); 
             }
+            if (App.isPage("receiptCons")){
+            	handleMenu("/IMShh_UI/page/receiptCons.html");
+            	handleDatePicker();
+            	initReceiptConsModule(); 
+            }
             if (App.isPage("deliver")){
             	handleMenu("/IMShh_UI/page/deliver.html");
             	handleDatePicker();
@@ -3933,6 +4113,22 @@ var App = function () {
             	handleMenu("/IMShh_UI/page/invoice.html");
             	handleDatePicker();
             	initInvoiceModule();
+            }
+            if (App.isPage("receivable")){
+            	handleMenu("/IMShh_UI/page/receivable.html");
+            	initReceivableModule();
+            }
+            if (App.isPage("payment")){
+            	handleMenu("/IMShh_UI/page/payment.html");
+            	initPaymentModule();
+            }
+            if (App.isPage("account")){
+            	handleMenu("/IMShh_UI/page/account.html");
+            	initAccountModule();
+            }
+            if (App.isPage("accountDetail")){
+            	handleMenu("/IMShh_UI/page/account.html");
+            	initAccountDetailModule();
             }
             if (App.isPage("customer")){
             	handleMenu("/IMShh_UI/page/customer.html");
@@ -4320,3 +4516,228 @@ $.fn.datepicker.dates['cn'] = {   //切换为中文显示
             clear: "清除"  
 };	          
 	 
+function CreditCard(){
+	var cardData = {};
+	
+	var cardRoot = $("<div class='col-md-3'>");
+	var panel = $("<div class='panel panel-default'>");
+	var panelHead = $("<div class='panel-heading'>");
+	var panelFooter = $("<div class='panel-footer'>");
+	
+	var cardInfoArea = $("<div class='row'>");
+	var logoArea = $("<div class='col-xs-2'>");
+	var bankInfoArea = $("<div class='col-xs-9 col-xs-offset-1'>");
+	
+	this.createCard = function(container, cardInfo){
+		init(container, cardInfo);		
+		
+		if (cardData.accountNo){
+			viewCard();
+		}else{
+			editCard();
+		}
+	}	
+	
+	var init = function(container, cardInfo){
+		container.append(cardRoot);
+		cardRoot.append(panel);
+		panel.append(panelHead);
+		panel.append(panelFooter);
+		panelHead.append(cardInfoArea);
+		cardInfoArea.append(logoArea);
+		cardInfoArea.append(bankInfoArea);	
+		
+		if (container.attr("id") == "div_public"){
+			cardData.accountType = 1;
+		}else{
+			cardData.accountType = 2;
+		}
+		
+		if (cardInfo){
+			cardData = cardInfo;
+		}
+	}
+	
+	var createOptEdit = function(){
+		var oOpt_edit = $("<span class='pull-right tool'><a>&nbsp;<i class='fa fa-edit'></i></a></span>");
+		oOpt_edit.click(function(){
+			editCard();
+		});
+		return oOpt_edit;
+	}
+	
+	var createOptDetail = function(){
+		var oOpt_detail = $("<span class='pull-right tool'><a href='/IMShh_UI/page/accountDetail.html'>&nbsp;<i class='fa fa-eye'></i></a></span>");
+		return oOpt_detail;
+	}
+	
+	var createOptSave = function(){
+		var oOpt_save = $("<span class='pull-right tool'><a>&nbsp;<i class='fa fa-save (alias)'></i></a></span>");
+		oOpt_save.click(function(){
+			saveCardInfo();
+		});
+		return oOpt_save;
+	}
+	
+	var createOptRemove = function(){
+		var oOpt_remove = $("<span class='pull-right tool'><a>&nbsp;<i class='fa fa-eraser'></i></a></span>");
+		oOpt_remove.click(function(){
+			bootbox.confirm("确定要删除银行卡吗？", function(){
+				$.ajax({
+					url: baseURL+"account/delete.do?id=" + cardData.id,
+					success: function(result){
+						cardRoot.remove();
+					}
+				});
+				
+			});
+		});
+		return oOpt_remove;
+	}
+	
+	var createOptCancel = function(){
+		var oOpt_cancel = $("<span class='pull-right tool'><a><i class='fa fa-mail-reply (alias)'></i></a></span>");
+		oOpt_cancel.click(function(){
+			if (cardData.accountNo){
+				viewCard();
+			}else{
+				cardRoot.remove();
+			}
+		});
+		return oOpt_cancel;
+	}
+	
+	var viewCard = function(){
+		var bankLogo = "";
+		var cardBank = "";
+		var cardNoMask = "";
+		
+		if(cardData.accountNo){
+			bankLogo = cardData.bankLogo;
+			cardBank = cardData.bank;
+			cardNoMask = cardData.accountNo.substr(0, 4) + " **** " + cardData.accountNo.substr(cardData.accountNo.length - 4);
+		}
+		
+		var oCardLogo = $("<img alt='找不到Logo' src='../img/bank/" + bankLogo + ".ico'>");
+		var oBankName = $("<div class='lager'>" + cardBank + "</div>");
+		var oCardNo = $("<div>" + cardNoMask + "</div>");
+				
+		clearCard();
+		
+		logoArea.append(oCardLogo);
+		bankInfoArea.append(oBankName);
+		bankInfoArea.append(oCardNo);
+		
+		panelFooter.append(createOptEdit());
+		panelFooter.append(createOptDetail());
+		panel.attr("class", "panel panel-success");
+		clearFix();
+	}
+	
+	var editCard = function(){
+		var cardBank = "";
+		var cardBrachBank = "";
+		var cardNo = "";
+		var cardUser = "";
+		if(cardData.accountNo){
+			cardBank = cardData.bank;
+			cardBrachBank = cardData.brachBank;
+			cardNo = cardData.accountNo;
+			cardUser = cardData.accountUser;
+		}
+		
+		var oLogoMenu = $("<div class='dropdown'>");
+		var oLogoMenuBox = $("<span class='dropdown-toggle' id='banklogoMenu' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>");
+		var oLogo =  $("<img alt='Logo' src='../img/bank/" + cardData.bankLogo + ".ico'>");
+		var oLogoOptions = $("<ul class='dropdown-menu' style='height:160px;overflow:scroll' aria-labelledby='banklogoMenu'>");
+			
+		var oCardBank = $("<div><input type='text' name='bank' class='form-control' placeholder='请输入开户行' value='" + cardBank + "' required='required'></div>");
+		var oCardBrachBank = $("<div><input type='text' name='brachBank' value='" + cardBrachBank + "' class='form-control' placeholder='请输入支行'></div>");
+		var oCardNo = $("<div><input type='text' name='accountNo' value='" + cardNo + "' class='form-control' placeholder='请输入卡号' required='required'></div>");
+		var oCardUser = $("<div><input type='text' name='accountUser' value='" + cardUser + "' class='form-control' placeholder='请输入用户名' required='required'></div>");
+				
+		clearCard();
+		
+		oLogoMenu.append(oLogoMenuBox);
+		oLogoMenu.append(oLogoOptions);
+		oLogoMenuBox.append(oLogo);		
+		loadLogoOptions(oLogoOptions);
+		
+		logoArea.append(oLogoMenu);
+		bankInfoArea.attr("class", "col-xs-10");
+		bankInfoArea.append(oCardBank);
+		bankInfoArea.append(oCardBrachBank);
+		bankInfoArea.append(oCardNo);
+		bankInfoArea.append(oCardUser);		
+		
+		panelFooter.append(createOptCancel());
+		if (cardData.id)
+			panelFooter.append(createOptRemove());
+		panelFooter.append(createOptSave());
+		
+		clearFix();
+	}
+	
+	var loadLogoOptions = function(oul){
+		
+		$.getJSON("../json/bankLogo.json", function (data){
+			$.each(data, function(index, value){
+				var oli = $("<li><a><img alt='' src='../img/bank/" + value.icon + ".ico'>" + value.label + "</a></li>");
+				oli.click(function(){
+					oul.prev().html("<img alt='' src='../img/bank/" + value.icon + ".ico'>");
+					cardData.bankLogo = value.icon;
+				});
+				oul.append(oli);
+			});
+		});
+	}
+	
+	var saveCardInfo = function(){
+		var cardBank = bankInfoArea.find("input[name=bank]").val();
+		var brachBank = bankInfoArea.find("input[name=brachBank]").val();
+		var cardNo = bankInfoArea.find("input[name=accountNo]").val();
+		var cardUser = bankInfoArea.find("input[name=accountUser]").val();
+		if ($.trim(cardBank) == ''){
+			alert("开户行信息不能为空");
+			panelCardInfo.find("input[name=bank]").focus();
+			return;
+		}
+		
+		if ($.trim(cardNo) == ''){
+			alert("卡号不能为空");
+			panelCardInfo.find("input[name=accountNo]").focus();
+			return;
+		}
+		
+		if ($.trim(cardUser) == ''){
+			alert("银行卡用户不能为空");
+			panelCardInfo.find("input[name=accountUser]").focus();
+			return;
+		}		
+		cardData.bank = cardBank;
+		cardData.brachBank = brachBank;
+		cardData.accountNo = cardNo;
+		cardData.accountUser = cardUser;
+		
+		$.ajax({
+			url: baseURL+"account/save.do",
+			type: "POST",
+			data: cardData,
+			success: function(result){
+				cardData.id = result;
+				viewCard();
+			}
+		});		
+	}
+	
+	var clearCard = function(){
+		logoArea.html("");
+		bankInfoArea.html("");
+		panelFooter.html("");
+		bankInfoArea.attr("class", "col-xs-9 col-xs-offset-1");
+	}
+	
+	var clearFix = function(){
+		panelFooter.append($("<div class='clearfix'></div>"));
+	}
+};

@@ -1,0 +1,8 @@
+{
+	"rows":[		
+	       {"customer": "兴通快干胶粉", "receiveulm": 130000.00, "retainageulm": 0, "amountcm": null, "receivecm": null, "retainagecm": null, "amount": 130000, "receive": 130000, "retainage": 0},
+	       {"customer": "宇兴化工", "receiveulm": 326000, "retainageulm": 1000000, "amountcm": null, "receivecm": null, "retainagecm": null, "amount": 130000, "receive": 130000, "retainage": 1326000},
+	       {"customer": "虹翔兰光剂", "receiveulm": 11687, "retainageulm": 0, "amountcm": null, "receivecm": null, "retainagecm": null, "amount": 11687, "receive": 11687, "retainage": 0},
+	       {"customer": "绿闪剂刘守如", "receiveulm": 27480, "retainageulm": 0, "amountcm": 1314000, "receivecm": 1310000, "retainagecm": 4000, "amount": 1341480, "receive": 1337480, "retainage": 4000}
+		]
+}

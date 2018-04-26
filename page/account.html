@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>华辉烟花信息管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" href="../css/cloud-admin.css" >
+	<link rel="stylesheet" href="../css/themes/default.css">
+	<link rel="stylesheet" href="../css/responsive.css" >
+	<link rel="stylesheet" href="../bootstrap-table/bootstrap-table.css">
+	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+	<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+
+</head>
+<body>
+	<header class="navbar clearfix navbar-fixed-top" id="header">
+		<div class="container">
+				<div class="navbar-brand">
+					<a href="index.html">
+						<img src="../img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+					</a>
+					
+					<div class="visible-xs">
+						<a href="#" class="team-status-toggle switcher btn dropdown-toggle">
+							<i class="fa fa-users"></i>
+						</a>
+					</div>
+					
+					<div id="sidebar-collapse" class="sidebar-collapse btn">
+						<i class="fa fa-bars" 
+							data-icon1="fa fa-bars" 
+							data-icon2="fa fa-bars" ></i>
+					</div>
+				</div>
+				
+				<ul class="nav navbar-nav pull-right">
+					<li class="dropdown user" id="header-user">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" src="../img/avatars/avatar3.jpg" />
+							<span class="username">Admin</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/IMShh_UI/index.html"><i class="fa fa-user"></i> 个人信息</a></li>
+							<li><a href="#"><i class="fa fa-eye"></i> 修改密码</a></li>
+							<li><a href="login.html"><i class="fa fa-power-off"></i> 退出系统</a></li>
+						</ul>
+					</li>
+				</ul>
+		</div>		
+	</header>
+	
+	<section id="page">
+		<div id="sidebar" class="sidebar-fixed">
+			<div class="sidebar-menu nav-collapse">
+				<ul id="menubar">
+				</ul>
+			</div>
+		</div>
+		
+		<div id="main-content">			
+			<div class="container">				
+				<div class="row">
+					<div id="content" class="col-lg-12">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="page-header">
+									<div class="clearfix">
+										<h3 class="content-title pull-left">账户管理</h3>										
+									</div>
+									<div class="description">对公、对私账户的交易明细</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="box">							
+									<div class="box-body">
+										<div class="panel panel-default">
+										    <div class="panel-body">
+												<div class="title-bar">
+											        <div class="pull-left title">对公账户</div>
+											        <div class="pull-right" id="div_add_pub">
+											            <a href="#"><span><i class="glyphicon glyphicon-plus"></i></span>
+											                                添加账户</a>
+											        </div>
+											        <div class="clearfix"></div>
+											    </div>
+												
+												<div id="div_public" class="row" style="min-height: 80px">
+											    </div>
+												
+											    <div class="title-bar">
+											        <div class="pull-left title">对私账户</div>
+											        <div class="pull-right" id="div_add_pri">
+											            <a href="#"><span><i class="glyphicon glyphicon-plus"></i></span>
+											                                添加账户</a>
+											        </div>
+											        <div class="clearfix"></div>
+											    </div>
+												
+												<div class="row" id="div_private" style="min-height: 80px">
+											        
+											    </div>
+											
+										    </div>										  
+										</div>
+									</div>
+								</div>
+								<!-- /BOX -->
+							</div>
+								
+						</div>
+					
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	
+	
+	<script src="../js/jquery/jquery-2.0.3.min.js"></script>
+	<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+	<script src="../bootstrap-table/bootstrap-table.js"></script>
+	<script src="../js/jQuery-Cookie/jquery.cookie.min.js"></script>
+	
+	<script src="../js/script.js"></script>
+	<script>
+		jQuery(document).ready(function() {		
+			App.setPage("account");
+			App.init(); 
+		});
+	</script>
+	<!-- /JAVASCRIPTS -->
+</body>
+</html>

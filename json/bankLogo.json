@@ -1,0 +1,16 @@
+[
+    {"icon": "gongshang", "label": "工商银行"},
+    {"icon": "nongye", "label": "农业银行"},
+    {"icon": "jianshe", "label": "建设银行"},
+    {"icon": "zhongguo", "label": "中国银行"},
+    {"icon": "jiaotong", "label": "交通银行"},
+    {"icon": "zhaoshang", "label": "招商银行"},
+    {"icon": "pingan", "label": "平安银行"},
+    {"icon": "minsheng", "label": "民生银行"},
+    {"icon": "zhongxin", "label": "中信银行"},
+    {"icon": "xingye", "label": "兴业银行"},
+    {"icon": "pufa", "label": "浦发银行"},
+    {"icon": "guangda", "label": "光大银行"},
+    {"icon": "hengfeng", "label": "恒丰银行"},
+    {"icon": "xinyongshe", "label": "湖南农村信用社"}
+]
